@@ -11,58 +11,19 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
     public class PurchaseWithCouponStepDefinitions
     {
         private IWebDriver _driver;
-        private string baseUrl;
         private readonly ScenarioContext _scenarioContext;
 
         public PurchaseWithCouponStepDefinitions(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
             this._driver = (IWebDriver)_scenarioContext["driver"];
-            this.baseUrl = (string)_scenarioContext["baseUrl"];
         }
 
-        [Given(@"I am on the Edgewords eCommerce website")]
-        public void GivenIAmOnTheEdgewordsECommerceWebsite()
-        {
-            _driver.Url = baseUrl + "/my-account/";
 
-            // If the Store Notice is displayed, dismiss it
-            string dismissNotice = "woocommerce-store-notice__dismiss-link";
-            if (_driver.FindElement(By.ClassName(dismissNotice)).Displayed)
-            {
-                _driver.FindElement(By.ClassName(dismissNotice)).Click();
-            }
-        }
-
-        [Given(@"I am logged in")]
-        public void GivenIAmLoggedIn()
-        {
-            // Log into the website as a registered user
-            string email = Environment.GetEnvironmentVariable("email");
-            string password = Environment.GetEnvironmentVariable("password");
-
-            LoginPOM loginPage = new LoginPOM(_driver);
-            loginPage.LoginWithValidCredentials(email, password);
-        }
-
-        [When(@"I add products to my cart")]
-        public void WhenIAddProductsToMyCart()
-        {
-            // Go to shop
-            NavPOM_ex navBar = new NavPOM_ex(_driver);
-            navBar.goToShop();
-
-            // Allow store contents one second to load
-            Helper myhelper = new Helper(_driver);
-            myhelper.WaitForElement(1, By.XPath("//main[@id='main']/ul//a[@href='?add-to-cart=31']"));
-
-            // Add items to the cart and navigate to cart
-            ShopPOM shopPage = new ShopPOM(_driver);
-            shopPage.addItemsToCart();
-
-            // Go to cart
-            navBar.goToCart();
-        }
+        /*
+         * [When] "I apply a coupon to the cart"
+         *    - Applies the 'edgewords' 15% off coupon to the cart 
+         */
 
         [When(@"I apply a coupon to the cart")]
         public void WhenIApplyACouponToTheCart()
@@ -81,6 +42,12 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
             // Using a thread.sleep to bypass (if the waitForCoupon was too fast due to it already being applied)
             Thread.Sleep(1000);
         }
+
+
+        /*
+         * [Then] "15% of the subtotal is deducted"
+         *    - Calculates and verifies the coupon savings as well as the grand total.
+         */
 
         [Then(@"15% of the subtotal is deducted")]
         public void ThenOfTheSubtotalIsDeducted()

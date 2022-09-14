@@ -22,6 +22,12 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
             this._customer = (Customer)_scenarioContext["customer"];
         }
 
+
+        /*
+         * [When] "I place the order"
+         *    - Enters all the revelant billing info and finalises the order 
+         */
+
         [When(@"I place the order")]
         public void WhenIPlaceTheOrder()
         {
@@ -44,6 +50,13 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
             WebDriverWait waitForOrderConfirmed = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
             waitForOrderConfirmed.Until(drv => drv.FindElement(By.ClassName("entry-title")).Text.Contains("Order received"));
         }
+
+
+        /*
+         * [Then] "the order number should appear on my orders page"
+         *    - Verifies that the newly generated order number (from: When I place the order) is present on the page 
+         *      containing all orders. 
+         */
 
         [Then(@"the order number should appear on my orders page")]
         public void ThenTheOrderNumberShouldAppearOnMyOrdersPage()
