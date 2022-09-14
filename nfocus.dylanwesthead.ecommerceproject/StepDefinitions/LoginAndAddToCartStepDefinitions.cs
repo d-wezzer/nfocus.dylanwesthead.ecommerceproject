@@ -69,18 +69,19 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
         public void WhenIAddProductsToMyCart()
         {
             // Go to shop
-            NavPOM_ex navBar = new NavPOM_ex(_driver);
+            NavigationBar navBar = new NavigationBar(_driver);
             navBar.goToShop();
 
             // Allow store contents one second to load
             Helper myhelper = new Helper(_driver);
             myhelper.WaitForElement(1, By.XPath("//main[@id='main']/ul//a[@href='?add-to-cart=31']"));
 
-            // Add items to the cart and navigate to cart
+            // Add items to the cart
             ShopPOM shopPage = new ShopPOM(_driver);
             shopPage.addItemsToCart();
 
-            // Go to cart
+            // Go to cart once the cart has updated with the items
+            myhelper.WaitForElement(2, By.LinkText("View cart"));
             navBar.goToCart();
         }
     }

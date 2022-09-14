@@ -34,7 +34,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
             Helper elemWaiter = new Helper(_driver);
             elemWaiter.WaitForElement(2, By.LinkText("Proceed to checkout"));
 
-            NavPOM_ex navBar = new NavPOM_ex(_driver);
+            NavigationBar navBar = new NavigationBar(_driver);
             navBar.goToCheckout();
 
             // Fills in the billing form with the customers details
@@ -64,17 +64,24 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
             // Retrieves the unique order number
             OrderDetailsPOM orderDetailsPage = new OrderDetailsPOM(_driver);
             string newOrderNumber = orderDetailsPage.getOrderNumber();
+
             Console.WriteLine($"\nYour new order number: #{newOrderNumber}");
 
-            NavPOM_ex navBar = new NavPOM_ex(_driver);
+            NavigationBar navBar = new NavigationBar(_driver);
             navBar.goToMyAccount();
+
+            // Wait for the orders link to be displayed in the side menu
+            Helper myHelper = new Helper(_driver);
+            myHelper.WaitForElement(2, By.LinkText("Orders"));
 
             // Go to the orders page to see all successfully placed orders
             MyAccountPOM myAccountPage = new MyAccountPOM(_driver);
             myAccountPage.goToOrders();
 
+            // Collect the top most order number, this should be the most recent order
             IWebElement ordersTable = _driver.FindElement(By.CssSelector(".woocommerce-orders-table__cell-order-number"));
             Console.WriteLine($"Orders table contains: {ordersTable.Text}\n");
+
             Assert.That(ordersTable.Text, Does.Contain(newOrderNumber), $"The order with order number {newOrderNumber} was not found on your orders page");
 
         }

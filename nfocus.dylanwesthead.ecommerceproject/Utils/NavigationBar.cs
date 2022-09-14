@@ -5,16 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nfocus.dylanwesthead.ecommerceproject.POMPages
+namespace nfocus.dylanwesthead.ecommerceproject.Utils
 {
-    internal class NavPOM_ex
+    internal class NavigationBar
     {
 
         private IWebDriver _driver;
 
-        public NavPOM_ex(IWebDriver driver)
+        public NavigationBar(IWebDriver driver)
         {
-            this._driver = driver;
+            _driver = driver;
         }
 
         // locators

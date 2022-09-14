@@ -32,15 +32,10 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
             CartPOM cartPage = new CartPOM(_driver);
             cartPage.enterCoupon("edgewords").applyCoupon();
 
-            /* ---------------------------------------------------------------------------------------------------------------------- */
-            // If the coupon has already been applied then this waitForCoupon does nothing and leaves the basket no time to update the totals
-
+            // If the coupon has already been applied then this waitForCoupon doesn't wait at all
             // Wait for the coupon to be applied
             Helper waitForCoupon = new Helper(_driver);
             waitForCoupon.WaitForElement(3, By.ClassName("cart-discount"));
-
-            // Using a thread.sleep to bypass (if the waitForCoupon was too fast due to it already being applied)
-            Thread.Sleep(1000);
         }
 
 

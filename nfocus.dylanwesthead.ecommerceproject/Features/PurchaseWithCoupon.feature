@@ -4,7 +4,7 @@ After successfully placing an order, the new order number should be present in t
 Background: 
 	Given I am on the Edgewords eCommerce website
 
-@tag1
+@Coupon
 Scenario: Creating a purchase order with a 15% off coupon
 	Given I am logged in
 	When I add products to my cart

@@ -1,10 +1,10 @@
 ﻿Feature: CreateAndVerifyOrderNumber
-When using a valid coupon on the cart screen, 15% of the total price should be deducted.
+When using a valid coupon on the cart screen, 15% of the subtotal price should be deducted.
 
 Background:
 	Given I am on the Edgewords eCommerce website
 
-@tag1
+@OrderNumber
 Scenario: Creating an order and verify its presence in all orders
 	Given I am logged in
 	When I add products to my cart

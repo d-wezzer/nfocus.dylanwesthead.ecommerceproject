@@ -35,8 +35,8 @@ namespace nfocus.dylanwesthead.ecommerceproject.Features
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "CreateAndVerifyOrderNumber", "When using a valid coupon on the cart screen, 15% of the total price should be de" +
-                    "ducted.", ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "CreateAndVerifyOrderNumber", "When using a valid coupon on the cart screen, 15% of the subtotal price should be" +
+                    " deducted.", ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -85,11 +85,11 @@ namespace nfocus.dylanwesthead.ecommerceproject.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Creating an order and verify its presence in all orders")]
-        [NUnit.Framework.CategoryAttribute("tag1")]
+        [NUnit.Framework.CategoryAttribute("OrderNumber")]
         public void CreatingAnOrderAndVerifyItsPresenceInAllOrders()
         {
             string[] tagsOfScenario = new string[] {
-                    "tag1"};
+                    "OrderNumber"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Creating an order and verify its presence in all orders", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 8
