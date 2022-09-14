@@ -31,8 +31,8 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
         [When(@"I place the order")]
         public void WhenIPlaceTheOrder()
         {
-            Helper elemWaiter = new Helper(_driver);
-            elemWaiter.WaitForElement(2, By.LinkText("Proceed to checkout"));
+            //Helper elemWaiter = new Helper(_driver);
+            //elemWaiter.WaitForElement(2, By.LinkText("Proceed to checkout"));
 
             NavigationBar navBar = new NavigationBar(_driver);
             navBar.goToCheckout();
@@ -65,7 +65,9 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
             OrderDetailsPOM orderDetailsPage = new OrderDetailsPOM(_driver);
             string newOrderNumber = orderDetailsPage.getOrderNumber();
 
-            Console.WriteLine($"\nYour new order number: #{newOrderNumber}");
+            // Takes a screenshot of the new order number in order details and attaches to the Test Details (for verification purposes)
+            Helper elementScreenshot = new Helper(_driver);
+            elementScreenshot.TakeScreenshotElement(orderDetailsPage.GetOrderDetails(), "new_order_number");
 
             NavigationBar navBar = new NavigationBar(_driver);
             navBar.goToMyAccount();
@@ -78,11 +80,16 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
             MyAccountPOM myAccountPage = new MyAccountPOM(_driver);
             myAccountPage.goToOrders();
 
-            // Collect the top most order number, this should be the most recent order
-            IWebElement ordersTable = _driver.FindElement(By.CssSelector(".woocommerce-orders-table__cell-order-number"));
-            Console.WriteLine($"Orders table contains: {ordersTable.Text}\n");
+            // Takes a screenshot of the entire orders table in my account and attaches to the Test Details (for verification purposes)
+            AllOrdersPOM allOrdersPage = new AllOrdersPOM(_driver);
+            elementScreenshot.TakeScreenshotElement(allOrdersPage.getAllOrderNumbersTable(), "top_order_from_all_orders");
 
-            Assert.That(ordersTable.Text, Does.Contain(newOrderNumber), $"The order with order number {newOrderNumber} was not found on your orders page");
+            // Collect the top most order number, this should be the most recent order
+            string topOrderNumber = allOrdersPage.getTopOrderNumber();
+
+            Console.WriteLine($"\nYour new order number: #{newOrderNumber}\nOrders table contains: {topOrderNumber}\n");
+
+            Assert.That(topOrderNumber, Does.Contain(newOrderNumber), $"The order with order number {newOrderNumber} was not found on your orders page");
 
         }
     }

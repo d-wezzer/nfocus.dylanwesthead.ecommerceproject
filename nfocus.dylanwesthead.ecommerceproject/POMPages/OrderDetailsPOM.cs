@@ -18,6 +18,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 
         // Locators
         IWebElement orderNumberField => _driver.FindElement(By.CssSelector(".order > strong"));
+        IWebElement orderDetailsFull => _driver.FindElement(By.ClassName("woocommerce-thankyou-order-details"));
 
 
         public string getOrderNumber()
@@ -30,6 +31,11 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
             {
                 return orderNumberField.Text;
             }
+        }
+
+        public IWebElement GetOrderDetails()
+        {
+            return orderDetailsFull;
         }
     }
 }

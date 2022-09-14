@@ -32,8 +32,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
             CartPOM cartPage = new CartPOM(_driver);
             cartPage.enterCoupon("edgewords").applyCoupon();
 
-            // If the coupon has already been applied then this waitForCoupon doesn't wait at all
-            // Wait for the coupon to be applied
+            // Wait for the coupon to be applied (if not already)
             Helper waitForCoupon = new Helper(_driver);
             waitForCoupon.WaitForElement(3, By.ClassName("cart-discount"));
         }
@@ -67,6 +66,10 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
             Decimal grandTotal = cartPage.getGrandTotal();
 
             Console.WriteLine($"Shipping Cost: {shippingCost}\n\nExpected Grand Total: {priceToPay}\nActual Grand Total: {grandTotal}\n");
+
+            // Takes a screenshot of the cart totals table and attaches to the Test Details (for verification purposes)
+            Helper elementScreenshot = new Helper(_driver);
+            elementScreenshot.TakeScreenshotElement(cartPage.GetCartTotalsElement(), "all_cart_totals");
 
             // Verify the expected grand total is identical to the actual grand total displayed on the webpage
             Assert.That(priceToPay, Is.EqualTo(grandTotal), "Grand total has not been calculated correctly.");
