@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<RunSettings>
+	<RunConfiguration>
+		<EnvironmentVariables>
+			<!--List of the sensitive environment variables and their values-->
+			<email>dylan.westhead@nfocus.co.uk</email>
+			<password>thisISaREALLYlongPASS123.</password>
+			<BROWSER>chrome</BROWSER>
+		</EnvironmentVariables>
+	</RunConfiguration>
+</RunSettings>
