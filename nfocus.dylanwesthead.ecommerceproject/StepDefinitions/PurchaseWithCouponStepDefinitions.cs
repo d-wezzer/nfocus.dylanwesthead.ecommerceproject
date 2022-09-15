@@ -25,12 +25,12 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
          *    - Applies the 'edgewords' 15% off coupon to the cart 
          */
 
-        [When(@"I apply a coupon to the cart")]
-        public void WhenIApplyACouponToTheCart()
+        [When(@"I apply the coupon '([^']*)' to the cart")]
+        public void WhenIApplyTheCouponToTheCart(string coupon)
         {
             // Apply the 15% off coupon
             CartPOM cartPage = new CartPOM(_driver);
-            cartPage.enterCoupon("edgewords").applyCoupon();
+            cartPage.enterCoupon(coupon).applyCoupon();
 
             // Wait for the coupon to be applied (if not already)
             Helper waitForCoupon = new Helper(_driver);
@@ -43,16 +43,16 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
          *    - Calculates and verifies the coupon savings as well as the grand total.
          */
 
-        [Then(@"15% of the subtotal is deducted")]
-        public void ThenOfTheSubtotalIsDeducted()
+        [Then(@"'([^']*)'% of the subtotal is deducted")]
+        public void ThenOfTheSubtotalIsDeducted(int savingsPercentage)
         {
             CartPOM cartPage = new CartPOM(_driver);
 
             Decimal basketTotal = cartPage.getSubtotalBeforeCoupon();
             Decimal couponSavings = cartPage.getCouponSavings();
 
-            // Works out 85% of the total, implying a 15% discount
-            Decimal priceToPay = basketTotal / 100 * 85; // Total / 100 = 1% | 1% * 85 = 85%
+            // Works out total after coupon savings. E.g. 85% of the total implies a 15% discount
+            Decimal priceToPay = basketTotal / 100 * (100 - savingsPercentage); // Total / 100 = 1% | 1% * (100 - 85) = 85%
             Console.WriteLine($"\nTotal before Coupon: {basketTotal}\nTotal Savings: {couponSavings}\nTotal after Coupon: {priceToPay}");
 
             // Verify the coupon saves exactly 15% of the original total
@@ -74,8 +74,6 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
             // Takes a screenshot of the cart totals table and attaches to the Test Details (for verification purposes)
             Helper elementScreenshot = new Helper(_driver);
             elementScreenshot.TakeScreenshotElement(cartPage.GetCartTotalsElement(), "all_cart_totals");
-
-
 
             // Verify the expected grand total is identical to the actual grand total displayed on the webpage
             Assert.That(priceToPay, Is.EqualTo(grandTotal), "Grand total has not been calculated correctly.");

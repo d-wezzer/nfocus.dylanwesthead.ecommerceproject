@@ -8,5 +8,5 @@ Background:
 Scenario: Creating a purchase order with a 15% off coupon
 	Given I am logged in
 	When I add products to my cart
-	And I apply a coupon to the cart
-	Then 15% of the subtotal is deducted
+	And I apply the coupon 'edgewords' to the cart
+	Then '15'% of the subtotal is deducted
