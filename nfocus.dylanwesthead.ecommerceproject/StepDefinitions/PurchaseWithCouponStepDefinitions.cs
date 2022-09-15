@@ -67,9 +67,15 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
 
             Console.WriteLine($"Shipping Cost: {shippingCost}\n\nExpected Grand Total: {priceToPay}\nActual Grand Total: {grandTotal}\n");
 
+            //Ensure element is visible before screenshot (chromedriver workaround)
+            IJavaScriptExecutor js = _driver as IJavaScriptExecutor;
+            js.ExecuteScript("arguments[0].scrollIntoView();", _driver.FindElement(By.CssSelector(".cart-collaterals > div")));
+
             // Takes a screenshot of the cart totals table and attaches to the Test Details (for verification purposes)
             Helper elementScreenshot = new Helper(_driver);
             elementScreenshot.TakeScreenshotElement(cartPage.GetCartTotalsElement(), "all_cart_totals");
+
+
 
             // Verify the expected grand total is identical to the actual grand total displayed on the webpage
             Assert.That(priceToPay, Is.EqualTo(grandTotal), "Grand total has not been calculated correctly.");

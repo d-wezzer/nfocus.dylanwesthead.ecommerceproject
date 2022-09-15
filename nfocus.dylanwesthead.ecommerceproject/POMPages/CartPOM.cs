@@ -23,7 +23,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         IWebElement couponSavingsField => _driver.FindElement(By.CssSelector(".cart-discount.coupon-edgewords > td > .amount.woocommerce-Price-amount"));
         IWebElement shippingCostField => _driver.FindElement(By.CssSelector("label  bdi"));
         IWebElement grandTotalField => _driver.FindElement(By.CssSelector("strong > .amount.woocommerce-Price-amount > bdi"));
-        IWebElement allCartTotals => _driver.FindElement(By.CssSelector("#post-5 > div > div > div.cart-collaterals > div"));
+        IWebElement allCartTotals => _driver.FindElement(By.CssSelector(".cart-collaterals > div"));
 
         // Enters a coupon code into the coupon field
         public CartPOM enterCoupon(string coupon)
