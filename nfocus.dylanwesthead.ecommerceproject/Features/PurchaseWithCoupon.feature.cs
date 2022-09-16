@@ -84,14 +84,14 @@ namespace nfocus.dylanwesthead.ecommerceproject.Features
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Creating a purchase order with a 15% off coupon")]
+        [NUnit.Framework.DescriptionAttribute("Creating a purchase order with a coupon")]
         [NUnit.Framework.CategoryAttribute("Coupon")]
-        public void CreatingAPurchaseOrderWithA15OffCoupon()
+        public void CreatingAPurchaseOrderWithACoupon()
         {
             string[] tagsOfScenario = new string[] {
                     "Coupon"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Creating a purchase order with a 15% off coupon", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Creating a purchase order with a coupon", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 8
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -115,7 +115,7 @@ this.FeatureBackground();
  testRunner.And("I apply the coupon \'edgewords\' to the cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 12
- testRunner.Then("\'15\'% of the subtotal is deducted", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("\'10\'% of the subtotal is deducted", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

@@ -5,8 +5,8 @@ Background:
 	Given I am on the Edgewords eCommerce website
 
 @Coupon
-Scenario: Creating a purchase order with a 15% off coupon
+Scenario: Creating a purchase order with a coupon
 	Given I am logged in
 	When I add products to my cart
 	And I apply the coupon 'edgewords' to the cart
-	Then '15'% of the subtotal is deducted
+	Then '10'% of the subtotal is deducted
