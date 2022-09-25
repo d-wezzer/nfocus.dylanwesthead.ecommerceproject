@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TechTalk.SpecFlow.Infrastructure;
 
 namespace nfocus.dylanwesthead.ecommerceproject.Utils
 {
@@ -25,12 +26,14 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
             waitForElemDisplay.Until(drv => drv.FindElement(Locator).Displayed);
         }
 
-        public void TakeScreenshotElement(IWebElement elem, string FileName)
+        public void TakeScreenshotElement(IWebElement elem, string element)
         {
             ITakesScreenshot sselem = elem as ITakesScreenshot;
             Screenshot screenshot = sselem.GetScreenshot();
-            screenshot.SaveAsFile(@"C:\Users\DylanWesthead\Documents\VS_Screenshots\nfocus.dylanwesthead.ecommerceproject." + FileName + ".png", ScreenshotImageFormat.Png);
-            TestContext.AddTestAttachment(@"C:\Users\DylanWesthead\Documents\VS_Screenshots\nfocus.dylanwesthead.ecommerceproject." + FileName + ".png");
+            
+            string FileName = Path.ChangeExtension(@"C:\Users\DylanWesthead\source\repos\nfocus.dylanwesthead.ecommerceproject\nfocus.dylanwesthead.ecommerceproject\bin\TestScreenshots\" + element + "_" + Path.GetRandomFileName() + ".png",  "png");
+            screenshot.SaveAsFile(FileName, ScreenshotImageFormat.Png);
+            TestContext.AddTestAttachment(FileName);
         }
     }
 }

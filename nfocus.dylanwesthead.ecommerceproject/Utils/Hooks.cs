@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using Gherkin.Ast;
+using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
@@ -8,6 +10,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Infrastructure;
 
 [assembly: Parallelizable(ParallelScope.Fixtures)] //Can only parallelise Features
 [assembly: LevelOfParallelism(2)] //Worker thread i.e. max amount of Features to run in Parallel
@@ -21,11 +26,13 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
         private string _baseUrl = "https://www.edgewordstraining.co.uk/demo-site/";
         private Customer _customer = new Customer("Dylan", "Westhead", "123 Sunshine Road", "St Helens", "WA9 9AW", "01234567890", "dylan.westhead@nfocus.co.uk");
         private readonly ScenarioContext _scenarioContext;
+        private readonly ISpecFlowOutputHelper _specflowOutputHelper;
 
 
-        public Hooks(ScenarioContext scenarioContext)
+        public Hooks(ScenarioContext scenarioContext, ISpecFlowOutputHelper outputHelper)
         {
             _scenarioContext = scenarioContext;
+            _specflowOutputHelper = outputHelper;
         }
 
 
@@ -54,6 +61,18 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
             _scenarioContext["driver"] = _driver;
             _scenarioContext["baseUrl"] = _baseUrl;
             _scenarioContext["customer"] = _customer;
+        }
+
+        [AfterStep]
+        public void TakeScreenshotAfterStep()
+        {
+            if (_driver is ITakesScreenshot screenshotCapture)
+            {
+                string FileName = Path.ChangeExtension(@"C:\Users\DylanWesthead\source\repos\nfocus.dylanwesthead.ecommerceproject\nfocus.dylanwesthead.ecommerceproject\bin\TestScreenshots\StepScreenshots\" + "StepScreenShot_" + Path.GetRandomFileName(), "png");
+
+                screenshotCapture.GetScreenshot().SaveAsFile(FileName);
+                _specflowOutputHelper.AddAttachment(FileName);
+            }
         }
 
         [After]
