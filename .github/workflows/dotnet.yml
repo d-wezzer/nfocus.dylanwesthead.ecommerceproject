@@ -11,7 +11,7 @@ env:
   password: aRandomPassword
   BROWSER: chrome
   STEPSCREENSHOT: false
-  
+
 jobs:
   build:
 
