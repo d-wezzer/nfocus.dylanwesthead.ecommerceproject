@@ -1,9 +1,4 @@
 ﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 {
@@ -17,27 +12,27 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         }
 
         // Locators. The => means each time the variable is used, find element is called 
-        IWebElement usernameField => _driver.FindElement(By.Id("username"));
-        IWebElement passwordField => _driver.FindElement(By.Id("password"));
-        IWebElement loginButton => _driver.FindElement(By.Name("login"));
+        IWebElement UsernameField => _driver.FindElement(By.Id("username"));
+        IWebElement PasswordField => _driver.FindElement(By.Id("password"));
+        IWebElement LoginButton => _driver.FindElement(By.Name("login"));
 
         public LoginPOM SetUsername(string username)
         {
-            usernameField.Clear();
-            usernameField.SendKeys(username);
+            UsernameField.Clear();
+            UsernameField.SendKeys(username);
             return this;
         }
 
         public LoginPOM SetPassword(string password)
         {
-            passwordField.Clear();
-            passwordField.SendKeys(password);
+            PasswordField.Clear();
+            PasswordField.SendKeys(password);
             return this;
         }
 
         public void GoLogin()
         {
-            loginButton.Click();
+            LoginButton.Click();
         }
 
         public bool LoginWithValidCredentials(string username, string password)

@@ -1,17 +1,8 @@
-﻿using Gherkin.Ast;
-using NUnit.Framework;
-using NUnit.Framework.Interfaces;
+﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Infrastructure;
 
 [assembly: Parallelizable(ParallelScope.Fixtures)] //Can only parallelise Features
@@ -29,10 +20,10 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
         private readonly ISpecFlowOutputHelper _specflowOutputHelper;
 
 
-        public Hooks(ScenarioContext ScenarioContext, ISpecFlowOutputHelper OutputHelper)
+        public Hooks(ScenarioContext scenarioContext, ISpecFlowOutputHelper outputHelper)
         {
-            _scenarioContext = ScenarioContext;
-            _specflowOutputHelper = OutputHelper;
+            _scenarioContext = scenarioContext;
+            _specflowOutputHelper = outputHelper;
         }
 
 

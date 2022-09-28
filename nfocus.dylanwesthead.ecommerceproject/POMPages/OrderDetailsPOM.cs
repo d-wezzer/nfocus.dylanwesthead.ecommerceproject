@@ -1,9 +1,4 @@
 ﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 {
@@ -17,25 +12,25 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         }
 
         // Locators
-        IWebElement orderNumberField => _driver.FindElement(By.CssSelector(".order > strong"));
-        IWebElement orderDetailsFull => _driver.FindElement(By.ClassName("woocommerce-thankyou-order-details"));
+        IWebElement OrderNumberField => _driver.FindElement(By.CssSelector(".order > strong"));
+        IWebElement OrderDetailsFull => _driver.FindElement(By.ClassName("woocommerce-thankyou-order-details"));
 
 
         public string getOrderNumber()
         {
             try
             {
-                return orderNumberField.Text;
+                return OrderNumberField.Text;
             }
             catch
             {
-                return orderNumberField.Text;
+                return OrderNumberField.Text;
             }
         }
 
         public IWebElement GetOrderDetails()
         {
-            return orderDetailsFull;
+            return OrderDetailsFull;
         }
     }
 }

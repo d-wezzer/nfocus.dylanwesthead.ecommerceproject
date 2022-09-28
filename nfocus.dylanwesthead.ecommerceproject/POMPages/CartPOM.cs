@@ -1,9 +1,4 @@
 ﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 {
@@ -17,62 +12,62 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         }
 
         // Locators
-        IWebElement couponCodeField => _driver.FindElement(By.Id("coupon_code"));
-        IWebElement applyCouponButton => _driver.FindElement(By.Name("apply_coupon"));
-        IWebElement subtotalField => _driver.FindElement(By.CssSelector(".cart-subtotal > td > .amount.woocommerce-Price-amount"));
-        IWebElement couponSavingsField => _driver.FindElement(By.CssSelector(".cart-discount.coupon-edgewords > td > .amount.woocommerce-Price-amount"));
-        IWebElement shippingCostField => _driver.FindElement(By.CssSelector("label  bdi"));
-        IWebElement grandTotalField => _driver.FindElement(By.CssSelector("strong > .amount.woocommerce-Price-amount > bdi"));
-        IWebElement allCartTotals => _driver.FindElement(By.CssSelector(".cart-collaterals > div"));
+        IWebElement CouponCodeField => _driver.FindElement(By.Id("coupon_code"));
+        IWebElement ApplyCouponButton => _driver.FindElement(By.Name("apply_coupon"));
+        IWebElement SubtotalField => _driver.FindElement(By.CssSelector(".cart-subtotal > td > .amount.woocommerce-Price-amount"));
+        IWebElement CouponSavingsField => _driver.FindElement(By.CssSelector(".cart-discount.coupon-edgewords > td > .amount.woocommerce-Price-amount"));
+        IWebElement ShippingCostField => _driver.FindElement(By.CssSelector("label  bdi"));
+        IWebElement GrandTotalField => _driver.FindElement(By.CssSelector("strong > .amount.woocommerce-Price-amount > bdi"));
+        IWebElement AllCartTotals => _driver.FindElement(By.CssSelector(".cart-collaterals > div"));
 
         // Enters a coupon code into the coupon field
-        public CartPOM enterCoupon(string coupon)
+        public CartPOM EnterCoupon(string coupon)
         {
-            couponCodeField.SendKeys(coupon);
+            CouponCodeField.SendKeys(coupon);
             return this;
         }
 
         // Click the apply coupon button
-        public void applyCoupon()
+        public void ApplyCoupon()
         {
-            applyCouponButton.Click();
+            ApplyCouponButton.Click();
         }
 
         // Retrieves the Basket Total before the coupon is applied, and removes the £ symbol
-        public decimal getSubtotalBeforeCoupon()
+        public decimal GetSubtotalBeforeCoupon()
         {
-            string basketTotalString = subtotalField.Text.Replace("£", "");
-            decimal basketTotal = decimal.Parse(basketTotalString);
-            return basketTotal;
+            string BasketTotalString = SubtotalField.Text.Replace("£", "");
+            decimal BasketTotal = decimal.Parse(BasketTotalString);
+            return BasketTotal;
         }
 
         // Retrieves the total coupon savings and removes the £ symbol
-        public decimal getCouponSavings()
+        public decimal GetCouponSavings()
         {
-            string couponSavingsString = couponSavingsField.Text.Replace("£", "");
-            decimal couponSavings = decimal.Parse(couponSavingsString);
-            return couponSavings;
+            string CouponSavingsString = CouponSavingsField.Text.Replace("£", "");
+            decimal CouponSavings = decimal.Parse(CouponSavingsString);
+            return CouponSavings;
         }
 
         // Retrieve the shipping cost and convert to a decimal
-        public decimal getShippingCost()
+        public decimal GetShippingCost()
         {
-            string shippingCostString = shippingCostField.Text.Replace("£", "");
-            decimal shippingCost = decimal.Parse(shippingCostString);
-            return shippingCost;
+            string ShippingCostString = ShippingCostField.Text.Replace("£", "");
+            decimal ShippingCost = decimal.Parse(ShippingCostString);
+            return ShippingCost;
         }
 
         // Retrieves actual grand total displayed on webpage, then converts to decimal
-        public decimal getGrandTotal()
+        public decimal GetGrandTotal()
         {
-            string grandTotalString = grandTotalField.Text.Replace("£", "");
-            decimal grandTotal = decimal.Parse(grandTotalString);
-            return grandTotal;
+            string GrandTotalString = GrandTotalField.Text.Replace("£", "");
+            decimal GrandTotal = decimal.Parse(GrandTotalString);
+            return GrandTotal;
         }
 
         public IWebElement GetCartTotalsElement()
         {
-            return allCartTotals;
+            return AllCartTotals;
         }
     }
 }

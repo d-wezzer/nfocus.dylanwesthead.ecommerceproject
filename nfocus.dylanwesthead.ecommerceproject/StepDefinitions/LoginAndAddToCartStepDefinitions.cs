@@ -1,6 +1,6 @@
-﻿using nfocus.dylanwesthead.ecommerceproject.POMPages;
+﻿using OpenQA.Selenium;
+using nfocus.dylanwesthead.ecommerceproject.POMPages;
 using nfocus.dylanwesthead.ecommerceproject.Utils;
-using OpenQA.Selenium;
 
 namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
 {
@@ -11,9 +11,9 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
         private readonly string _baseUrl;
         private readonly ScenarioContext _scenarioContext;
 
-        public LoginAndAddToCartStepDefinitions(ScenarioContext ScenarioContext)
+        public LoginAndAddToCartStepDefinitions(ScenarioContext scenarioContext)
         {
-            _scenarioContext = ScenarioContext;
+            _scenarioContext = scenarioContext;
             this._driver = (IWebDriver)_scenarioContext["driver"];
             this._baseUrl = (string)_scenarioContext["baseUrl"];
         }

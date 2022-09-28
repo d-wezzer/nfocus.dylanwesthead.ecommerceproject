@@ -1,9 +1,4 @@
 ﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 {
@@ -16,13 +11,13 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         }
 
         // Locators for items in shop
-        IWebElement hoodieWithLogo => _driver.FindElement(By.XPath("//main[@id='main']/ul//a[@href='?add-to-cart=31']"));
-        IWebElement baseballCap => _driver.FindElement(By.XPath("//main[@id='main']/ul//a[@href='?add-to-cart=29']"));
+        IWebElement HoodieWithLogo => _driver.FindElement(By.XPath("//main[@id='main']/ul//a[@href='?add-to-cart=31']"));
+        IWebElement BaseballCap => _driver.FindElement(By.XPath("//main[@id='main']/ul//a[@href='?add-to-cart=29']"));
 
         public void addItemsToCart()
         {
-            hoodieWithLogo.Click();
-            baseballCap.Click();
+            HoodieWithLogo.Click();
+            BaseballCap.Click();
         }
     }
 }

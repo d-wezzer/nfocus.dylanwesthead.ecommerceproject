@@ -10,15 +10,15 @@
         public string Phone;
         public string Email;
 
-        public Customer(string First, string Surname, string Address, string Town, string Postcode, string Phone, string Email)
+        public Customer(string first, string surname, string address, string town, string postcode, string phone, string email)
         {
-            this.First = First;
-            this.Surname = Surname;
-            this.Address = Address;
-            this.Town = Town;
-            this.Postcode = Postcode;
-            this.Phone = Phone;
-            this.Email = Email;
+            this.First = first;
+            this.Surname = surname;
+            this.Address = address;
+            this.Town = town;
+            this.Postcode = postcode;
+            this.Phone = phone;
+            this.Email = email;
         }
     }
 }

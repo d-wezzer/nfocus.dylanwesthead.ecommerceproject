@@ -1,8 +1,8 @@
-using nfocus.dylanwesthead.ecommerceproject.Utils;
 using OpenQA.Selenium;
-using nfocus.dylanwesthead.ecommerceproject.POMPages;
-using OpenQA.Selenium.Support.UI;
 using NUnit.Framework;
+using OpenQA.Selenium.Support.UI;
+using nfocus.dylanwesthead.ecommerceproject.Utils;
+using nfocus.dylanwesthead.ecommerceproject.POMPages;
 
 namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
 {
@@ -32,20 +32,20 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
             //Helper elemWaiter = new Helper(_driver);
             //elemWaiter.WaitForElement(2, By.LinkText("Proceed to checkout"));
 
-            NavigationBar Navbar = new NavigationBar(_driver);
+            NavigationBar Navbar = new(_driver);
             Navbar.GoToCheckout();
 
             // Fills in the billing form with the customers details
-            CheckoutPOM CheckoutPage = new CheckoutPOM(_driver);
-            CheckoutPage.populateBillingInfo(_customer.First, _customer.Surname, _customer.Address, _customer.Town,
+            CheckoutPOM CheckoutPage = new(_driver);
+            CheckoutPage.PopulateBillingInfo(_customer.First, _customer.Surname, _customer.Address, _customer.Town,
                 _customer.Postcode, _customer.Phone, _customer.Email);
 
             // Click the radio button to pay by cheque (NOT cash) and then place order
-            CheckoutPage.selectPayByCheque();
-            CheckoutPage.placeOrder();
+            CheckoutPage.SelectPayByCheque();
+            CheckoutPage.PlaceOrder();
 
             // Wait for the order details page to be displayed. Creating an order takes a few seconds
-            WebDriverWait WaitForOrderConfirmation = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
+            WebDriverWait WaitForOrderConfirmation = new(_driver, TimeSpan.FromSeconds(5));
             WaitForOrderConfirmation.Until(drv => drv.FindElement(By.ClassName("entry-title")).Text.Contains("Order received"));
         }
 
@@ -63,7 +63,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
             Helper MyHelper = new(_driver);
 
             // Retrieves the unique order number
-            OrderDetailsPOM OrderDetailsPage = new OrderDetailsPOM(_driver);
+            OrderDetailsPOM OrderDetailsPage = new(_driver);
             string NewOrderNumber = OrderDetailsPage.getOrderNumber();
 
             // Takes a screenshot of the new order number in order details and attaches to the Test Details (for verification purposes)
@@ -85,10 +85,10 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
 
             // Takes a screenshot of the entire orders table in my account and attaches to the Test Details (for verification purposes)
             AllOrdersPOM AllOrdersPage = new(_driver);
-            ElementScreenshot.TakeScreenshotElement(AllOrdersPage.getAllOrderNumbersTable(), "top_order_from_all_orders");
+            ElementScreenshot.TakeScreenshotElement(AllOrdersPage.GetAllOrderNumbersTable(), "top_order_from_all_orders");
 
             // Collect the top most order number, this should be the most recent order
-            string TopOrderNumber = AllOrdersPage.getTopOrderNumber();
+            string TopOrderNumber = AllOrdersPage.GetTopOrderNumber();
 
             Console.WriteLine($"\nYour new order number: #{NewOrderNumber}\nOrders table contains: {TopOrderNumber}\n");
             Assert.That(TopOrderNumber, Does.Contain(NewOrderNumber), $"The order with order number {NewOrderNumber} was not found on your orders page");

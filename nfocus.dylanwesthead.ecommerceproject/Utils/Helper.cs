@@ -14,18 +14,18 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
         }
 
         // Allows the driver a specified amount of time to complete it's action before fully timing out
-        public void WaitForElement(int Seconds, By Locator)
+        public void WaitForElement(int seconds, By locator)
         {
-            WebDriverWait WaitForElemDisplay = new WebDriverWait(_driver, TimeSpan.FromSeconds(Seconds));
-            WaitForElemDisplay.Until(drv => drv.FindElement(Locator).Displayed);
+            WebDriverWait WaitForElemDisplay = new WebDriverWait(_driver, TimeSpan.FromSeconds(seconds));
+            WaitForElemDisplay.Until(drv => drv.FindElement(locator).Displayed);
         }
 
-        public void TakeScreenshotElement(IWebElement Elem, string Element)
+        public void TakeScreenshotElement(IWebElement elem, string element)
         {
-            ITakesScreenshot SSelem = Elem as ITakesScreenshot;
+            ITakesScreenshot SSelem = elem as ITakesScreenshot;
             Screenshot Screenshot = SSelem.GetScreenshot();
             
-            string FileName = Path.ChangeExtension(@"C:\Users\DylanWesthead\source\repos\nfocus.dylanwesthead.ecommerceproject\nfocus.dylanwesthead.ecommerceproject\bin\TestScreenshots\" + Element + "_" + Path.GetRandomFileName() + ".png",  "png");
+            string FileName = Path.ChangeExtension(@"C:\Users\DylanWesthead\source\repos\nfocus.dylanwesthead.ecommerceproject\nfocus.dylanwesthead.ecommerceproject\bin\TestScreenshots\" + element + "_" + Path.GetRandomFileName() + ".png",  "png");
             Screenshot.SaveAsFile(FileName, ScreenshotImageFormat.Png);
             TestContext.AddTestAttachment(FileName);
         }
