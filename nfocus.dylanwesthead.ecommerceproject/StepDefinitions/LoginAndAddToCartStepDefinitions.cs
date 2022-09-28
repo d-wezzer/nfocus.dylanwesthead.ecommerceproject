@@ -23,13 +23,12 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
          * [Given] "I am on the Edgewords eCommerce website"
          *    - Navigates to the Edgewords eCommerce website login page.
          */
-
         [Given(@"I am on the Edgewords eCommerce website")]
         public void GivenIAmOnTheEdgewordsECommerceWebsite()
         {
             _driver.Url = _baseUrl + "/my-account/";
 
-            // If the Store Notice is displayed, dismiss it
+            // If the Store Notice is displayed, dismiss it.
             string DismissNotice = "woocommerce-store-notice__dismiss-link";
             if (_driver.FindElement(By.ClassName(DismissNotice)).Displayed)
             {
@@ -42,7 +41,6 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
          * [Given] "I am logged in"
          *    - Logs into the Edgewords eCommerce website with valid credentials.
          */
-
         [Given(@"I am logged in")]
         public void GivenIAmLoggedIn()
         {
@@ -59,23 +57,22 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
          * [When] "I add products to my cart"
          *    - Adds two products to the cart, the 'Hoodie with Logo' and the 'Cap'. 
          */
-
         [When(@"I add products to my cart")]
         public void WhenIAddProductsToMyCart()
         {
-            // Go to shop
+            // Go to shop.
             NavigationBar NavBar = new(_driver);
             NavBar.GoToShop();
 
-            // Allow store contents one second to load
+            // Allow store contents one second to load.
             Helper Myhelper = new(_driver);
             Myhelper.WaitForElement(1, By.XPath("//main[@id='main']/ul//a[@href='?add-to-cart=31']"));
 
-            // Add items to the cart
+            // Add items to the cart.
             ShopPOM ShopPage = new(_driver);
-            ShopPage.addItemsToCart();
+            ShopPage.AddItemsToCart();
 
-            // Go to cart once the cart has updated with the items
+            // Go to cart once the cart has updated with the items.
             Myhelper.WaitForElement(2, By.LinkText("View cart"));
             NavBar.GoToCart();
         }

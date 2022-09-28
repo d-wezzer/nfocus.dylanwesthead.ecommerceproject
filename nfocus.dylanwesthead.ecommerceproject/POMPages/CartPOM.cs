@@ -11,7 +11,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
             this._driver = driver;
         }
 
-        // Locators
+        // Locators to the required elements on the cart page. The => means each time the variable is used, find element is called.
         IWebElement CouponCodeField => _driver.FindElement(By.Id("coupon_code"));
         IWebElement ApplyCouponButton => _driver.FindElement(By.Name("apply_coupon"));
         IWebElement SubtotalField => _driver.FindElement(By.CssSelector(".cart-subtotal > td > .amount.woocommerce-Price-amount"));
@@ -20,20 +20,21 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         IWebElement GrandTotalField => _driver.FindElement(By.CssSelector("strong > .amount.woocommerce-Price-amount > bdi"));
         IWebElement AllCartTotals => _driver.FindElement(By.CssSelector(".cart-collaterals > div"));
 
-        // Enters a coupon code into the coupon field
+
+        // Enters a coupon code into the coupon field. Returns a CartPOM object.
         public CartPOM EnterCoupon(string coupon)
         {
             CouponCodeField.SendKeys(coupon);
             return this;
         }
 
-        // Click the apply coupon button
+        // Clicks the apply coupon button.
         public void ApplyCoupon()
         {
             ApplyCouponButton.Click();
         }
 
-        // Retrieves the Basket Total before the coupon is applied, and removes the £ symbol
+        // Retrieves the Basket Total before the coupon is applied, and removes the £ symbol.
         public decimal GetSubtotalBeforeCoupon()
         {
             string BasketTotalString = SubtotalField.Text.Replace("£", "");
@@ -41,7 +42,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
             return BasketTotal;
         }
 
-        // Retrieves the total coupon savings and removes the £ symbol
+        // Retrieves the total coupon savings and removes the £ symbol.
         public decimal GetCouponSavings()
         {
             string CouponSavingsString = CouponSavingsField.Text.Replace("£", "");
@@ -49,7 +50,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
             return CouponSavings;
         }
 
-        // Retrieve the shipping cost and convert to a decimal
+        // Retrieve the shipping cost and convert to a decimal.
         public decimal GetShippingCost()
         {
             string ShippingCostString = ShippingCostField.Text.Replace("£", "");
@@ -57,7 +58,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
             return ShippingCost;
         }
 
-        // Retrieves actual grand total displayed on webpage, then converts to decimal
+        // Retrieves actual grand total displayed on webpage, then converts to decimal.
         public decimal GetGrandTotal()
         {
             string GrandTotalString = GrandTotalField.Text.Replace("£", "");
@@ -65,6 +66,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
             return GrandTotal;
         }
 
+        // Retrieves the entire totals table element.
         public IWebElement GetCartTotalsElement()
         {
             return AllCartTotals;
