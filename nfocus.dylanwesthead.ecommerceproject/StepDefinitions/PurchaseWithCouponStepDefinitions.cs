@@ -1,7 +1,5 @@
 using nfocus.dylanwesthead.ecommerceproject.POMPages;
 using OpenQA.Selenium;
-using System;
-using TechTalk.SpecFlow;
 using nfocus.dylanwesthead.ecommerceproject.Utils;
 using NUnit.Framework;
 
@@ -13,9 +11,9 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
         private IWebDriver _driver;
         private readonly ScenarioContext _scenarioContext;
 
-        public PurchaseWithCouponStepDefinitions(ScenarioContext scenarioContext)
+        public PurchaseWithCouponStepDefinitions(ScenarioContext ScenarioContext)
         {
-            _scenarioContext = scenarioContext;
+            _scenarioContext = ScenarioContext;
             this._driver = (IWebDriver)_scenarioContext["driver"];
         }
 
@@ -26,15 +24,15 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
          */
 
         [When(@"I apply the coupon '([^']*)' to the cart")]
-        public void WhenIApplyTheCouponToTheCart(string coupon)
+        public void WhenIApplyTheCouponToTheCart(string Coupon)
         {
             // Apply the 15% off coupon
-            CartPOM cartPage = new CartPOM(_driver);
-            cartPage.enterCoupon(coupon).applyCoupon();
+            CartPOM CartPage = new(_driver);
+            CartPage.enterCoupon(Coupon).applyCoupon();
 
             // Wait for the coupon to be applied (if not already)
-            Helper waitForCoupon = new Helper(_driver);
-            waitForCoupon.WaitForElement(3, By.ClassName("cart-discount"));
+            Helper WaitForCoupon = new Helper(_driver);
+            WaitForCoupon.WaitForElement(3, By.ClassName("cart-discount"));
         }
 
 
@@ -44,43 +42,43 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
          */
 
         [Then(@"'([^']*)'% of the subtotal is deducted")]
-        public void ThenOfTheSubtotalIsDeducted(int savingsPercentage)
+        public void ThenOfTheSubtotalIsDeducted(int SavingsPercentage)
         {
-            CartPOM cartPage = new CartPOM(_driver);
+            CartPOM CartPage = new(_driver);
 
-            Decimal basketTotal = cartPage.getSubtotalBeforeCoupon();
+            Decimal BasketTotal = CartPage.getSubtotalBeforeCoupon();
             
-            Decimal expectedCouponSavings = basketTotal / 100 * savingsPercentage; // Works out expected coupon savings
-            Decimal actualCouponSavings = cartPage.getCouponSavings(); // Retrieves actual coupon savings grabbed directly from website
+            Decimal ExpectedCouponSavings = BasketTotal / 100 * SavingsPercentage; // Works out expected coupon savings
+            Decimal ActualCouponSavings = CartPage.getCouponSavings(); // Retrieves actual coupon savings grabbed directly from website
             
             // Works out expected total after coupon savings. E.g. 85% of the total implies a 15% discount
-            Decimal expectedPriceToPayBeforeShipping = basketTotal / 100 * (100 - savingsPercentage); // Total / 100 = 1% | 1% * (100 - 85) = 85%
-            Decimal actualPriceToPayBeforeShipping = basketTotal - actualCouponSavings;
+            Decimal ExpectedPriceToPayBeforeShipping = BasketTotal / 100 * (100 - SavingsPercentage); // Total / 100 = 1% | 1% * (100 - 85) = 85%
+            Decimal ActualPriceToPayBeforeShipping = BasketTotal - ActualCouponSavings;
 
             // Calculates expected grand total by adding the shipping cost to the discounted total (with coupon)
-            Decimal shippingCost = cartPage.getShippingCost();
-            Decimal priceToPay = expectedPriceToPayBeforeShipping + shippingCost;
+            Decimal ShippingCost = CartPage.getShippingCost();
+            Decimal PriceToPay = ExpectedPriceToPayBeforeShipping + ShippingCost;
 
             // Retrieve the grand total (total price to pay after deducting coupon savings and adding shipping cost)
-            Decimal grandTotal = cartPage.getGrandTotal();
+            Decimal GrandTotal = CartPage.getGrandTotal();
 
             //Ensure element is visible before screenshot (chromedriver workaround)
-            IJavaScriptExecutor js = _driver as IJavaScriptExecutor;
-            js.ExecuteScript("arguments[0].scrollIntoView();", _driver.FindElement(By.CssSelector(".cart-collaterals > div")));
+            IJavaScriptExecutor? Js = _driver as IJavaScriptExecutor;
+            Js.ExecuteScript("arguments[0].scrollIntoView();", _driver.FindElement(By.CssSelector(".cart-collaterals > div")));
 
             // Takes a screenshot of the cart totals table and attaches to the Test Details (for verification purposes)
-            Helper elementScreenshot = new Helper(_driver);
-            elementScreenshot.TakeScreenshotElement(cartPage.GetCartTotalsElement(), "all_cart_totals");
+            Helper ElementScreenshot = new(_driver);
+            ElementScreenshot.TakeScreenshotElement(CartPage.GetCartTotalsElement(), "all_cart_totals");
 
-            Console.WriteLine($"\nTotal before Coupon: £{basketTotal}\nExpected Total Savings: £{expectedCouponSavings}\nActual Total Savings: £{actualCouponSavings}");
-            Console.WriteLine($"\nExpected Total after Coupon: £{expectedPriceToPayBeforeShipping}\nActual Total after Coupon: £{actualPriceToPayBeforeShipping}");
-            Console.WriteLine($"Shipping Cost: £{shippingCost}\n\nExpected Grand Total: £{priceToPay}\nActual Grand Total: £{grandTotal}\n");
+            Console.WriteLine($"\nTotal before Coupon: £{BasketTotal}\nExpected Total Savings: £{ExpectedCouponSavings}\nActual Total Savings: £{ActualCouponSavings}");
+            Console.WriteLine($"\nExpected Total after Coupon: £{ExpectedPriceToPayBeforeShipping}\nActual Total after Coupon: £{ActualPriceToPayBeforeShipping}");
+            Console.WriteLine($"Shipping Cost: £{ShippingCost}\n\nExpected Grand Total: £{PriceToPay}\nActual Grand Total: £{GrandTotal}\n");
 
             // Verify the coupon saves exactly 15% of the original total
-            Assert.That(expectedPriceToPayBeforeShipping, Is.EqualTo(basketTotal - actualCouponSavings), $"Not equivalent to {savingsPercentage}% off the original total cost.");
+            Assert.That(ExpectedPriceToPayBeforeShipping, Is.EqualTo(BasketTotal - ActualCouponSavings), $"Not equivalent to {SavingsPercentage}% off the original total cost.");
 
             // Verify the expected grand total is identical to the actual grand total displayed on the webpage
-            Assert.That(priceToPay, Is.EqualTo(grandTotal), "Grand total has not been calculated correctly.");
+            Assert.That(PriceToPay, Is.EqualTo(GrandTotal), "Grand total has not been calculated correctly.");
         }
 
     }

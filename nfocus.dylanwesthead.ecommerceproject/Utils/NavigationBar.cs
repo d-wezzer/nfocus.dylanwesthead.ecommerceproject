@@ -18,36 +18,36 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
         }
 
         // locators
-        IWebElement homeLink => _driver.FindElement(By.LinkText("Home"));
-        IWebElement shopLink => _driver.FindElement(By.LinkText("Shop"));
-        IWebElement cartLink => _driver.FindElement(By.LinkText("Cart"));
-        IWebElement checkoutLink => _driver.FindElement(By.LinkText("Checkout"));
-        IWebElement myAccountLink => _driver.FindElement(By.LinkText("My account"));
+        IWebElement HomeLink => _driver.FindElement(By.LinkText("Home"));
+        IWebElement ShopLink => _driver.FindElement(By.LinkText("Shop"));
+        IWebElement CartLink => _driver.FindElement(By.LinkText("Cart"));
+        IWebElement CheckoutLink => _driver.FindElement(By.LinkText("Checkout"));
+        IWebElement MyAccountLink => _driver.FindElement(By.LinkText("My account"));
 
 
-        public void goToHome()
+        public void GoToHome()
         {
-            homeLink.Click();
+            HomeLink.Click();
         }
 
-        public void goToShop()
+        public void GoToShop()
         {
-            shopLink.Click();
+            ShopLink.Click();
         }
 
-        public void goToCart()
+        public void GoToCart()
         {
-            cartLink.Click();
+            CartLink.Click();
         }
 
-        public void goToCheckout()
+        public void GoToCheckout()
         {
-            checkoutLink.Click();
+            CheckoutLink.Click();
         }
 
-        public void goToMyAccount()
+        public void GoToMyAccount()
         {
-            myAccountLink.Click();
+            MyAccountLink.Click();
         }
 
     }

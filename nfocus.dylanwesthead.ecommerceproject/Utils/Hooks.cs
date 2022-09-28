@@ -29,18 +29,18 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
         private readonly ISpecFlowOutputHelper _specflowOutputHelper;
 
 
-        public Hooks(ScenarioContext scenarioContext, ISpecFlowOutputHelper outputHelper)
+        public Hooks(ScenarioContext ScenarioContext, ISpecFlowOutputHelper OutputHelper)
         {
-            _scenarioContext = scenarioContext;
-            _specflowOutputHelper = outputHelper;
+            _scenarioContext = ScenarioContext;
+            _specflowOutputHelper = OutputHelper;
         }
 
 
         [Before]
         public void Setup()
         {
-            string browser = Environment.GetEnvironmentVariable("BROWSER");
-            switch (browser)
+            string Browser = Environment.GetEnvironmentVariable("BROWSER");
+            switch (Browser)
             {
                 case "firefox":
                     _driver = new FirefoxDriver();
@@ -66,11 +66,11 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
         [AfterStep]
         public void TakeScreenshotAfterStep()
         {
-            if (_driver is ITakesScreenshot screenshotCapture)
+            if (_driver is ITakesScreenshot ScreenshotCapture)
             {
                 string FileName = Path.ChangeExtension(@"C:\Users\DylanWesthead\source\repos\nfocus.dylanwesthead.ecommerceproject\nfocus.dylanwesthead.ecommerceproject\bin\TestScreenshots\StepScreenshots\" + "StepScreenShot_" + Path.GetRandomFileName(), "png");
 
-                screenshotCapture.GetScreenshot().SaveAsFile(FileName);
+                ScreenshotCapture.GetScreenshot().SaveAsFile(FileName);
                 _specflowOutputHelper.AddAttachment(FileName);
             }
         }

@@ -1,30 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace nfocus.dylanwesthead.ecommerceproject.Utils
+﻿namespace nfocus.dylanwesthead.ecommerceproject.Utils
 {
     internal class Customer
     {
-        public string first;
-        public string surname;
-        public string address;
-        public string town;
-        public string postcode;
-        public string phone;
-        public string email;
+        public string First;
+        public string Surname;
+        public string Address;
+        public string Town;
+        public string Postcode;
+        public string Phone;
+        public string Email;
 
-        public Customer(string first, string surname, string address, string town, string postcode, string phone, string email)
+        public Customer(string First, string Surname, string Address, string Town, string Postcode, string Phone, string Email)
         {
-            this.first = first;
-            this.surname = surname;
-            this.address = address;
-            this.town = town;
-            this.postcode = postcode;
-            this.phone = phone;
-            this.email = email;
+            this.First = First;
+            this.Surname = Surname;
+            this.Address = Address;
+            this.Town = Town;
+            this.Postcode = Postcode;
+            this.Phone = Phone;
+            this.Email = Email;
         }
     }
 }

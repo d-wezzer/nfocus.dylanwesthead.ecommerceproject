@@ -1,11 +1,6 @@
 ﻿using nfocus.dylanwesthead.ecommerceproject.POMPages;
 using nfocus.dylanwesthead.ecommerceproject.Utils;
 using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
 {
@@ -13,14 +8,14 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
     public class LoginAndAddToCartStepDefinitions
     {
         private IWebDriver _driver;
-        private string baseUrl;
+        private readonly string _baseUrl;
         private readonly ScenarioContext _scenarioContext;
 
-        public LoginAndAddToCartStepDefinitions(ScenarioContext scenarioContext)
+        public LoginAndAddToCartStepDefinitions(ScenarioContext ScenarioContext)
         {
-            _scenarioContext = scenarioContext;
+            _scenarioContext = ScenarioContext;
             this._driver = (IWebDriver)_scenarioContext["driver"];
-            this.baseUrl = (string)_scenarioContext["baseUrl"];
+            this._baseUrl = (string)_scenarioContext["baseUrl"];
         }
 
 
@@ -32,13 +27,13 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
         [Given(@"I am on the Edgewords eCommerce website")]
         public void GivenIAmOnTheEdgewordsECommerceWebsite()
         {
-            _driver.Url = baseUrl + "/my-account/";
+            _driver.Url = _baseUrl + "/my-account/";
 
             // If the Store Notice is displayed, dismiss it
-            string dismissNotice = "woocommerce-store-notice__dismiss-link";
-            if (_driver.FindElement(By.ClassName(dismissNotice)).Displayed)
+            string DismissNotice = "woocommerce-store-notice__dismiss-link";
+            if (_driver.FindElement(By.ClassName(DismissNotice)).Displayed)
             {
-                _driver.FindElement(By.ClassName(dismissNotice)).Click();
+                _driver.FindElement(By.ClassName(DismissNotice)).Click();
             }
         }
 
@@ -52,11 +47,11 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
         public void GivenIAmLoggedIn()
         {
             // Log into the website as a registered user
-            string email = Environment.GetEnvironmentVariable("email");
-            string password = Environment.GetEnvironmentVariable("password");
+            string Email = Environment.GetEnvironmentVariable("email");
+            string Password = Environment.GetEnvironmentVariable("password");
 
-            LoginPOM loginPage = new LoginPOM(_driver);
-            loginPage.LoginWithValidCredentials(email, password);
+            LoginPOM LoginPage = new(_driver);
+            LoginPage.LoginWithValidCredentials(Email, Password);
         }
 
 
@@ -69,20 +64,20 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
         public void WhenIAddProductsToMyCart()
         {
             // Go to shop
-            NavigationBar navBar = new NavigationBar(_driver);
-            navBar.goToShop();
+            NavigationBar NavBar = new(_driver);
+            NavBar.GoToShop();
 
             // Allow store contents one second to load
-            Helper myhelper = new Helper(_driver);
-            myhelper.WaitForElement(1, By.XPath("//main[@id='main']/ul//a[@href='?add-to-cart=31']"));
+            Helper Myhelper = new(_driver);
+            Myhelper.WaitForElement(1, By.XPath("//main[@id='main']/ul//a[@href='?add-to-cart=31']"));
 
             // Add items to the cart
-            ShopPOM shopPage = new ShopPOM(_driver);
-            shopPage.addItemsToCart();
+            ShopPOM ShopPage = new(_driver);
+            ShopPage.addItemsToCart();
 
             // Go to cart once the cart has updated with the items
-            myhelper.WaitForElement(2, By.LinkText("View cart"));
-            navBar.goToCart();
+            Myhelper.WaitForElement(2, By.LinkText("View cart"));
+            NavBar.GoToCart();
         }
     }
 }
