@@ -65,10 +65,13 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
             // Retrieves the unique order number
             OrderDetailsPOM OrderDetailsPage = new(_driver);
             string NewOrderNumber = OrderDetailsPage.getOrderNumber();
-
-            // Takes a screenshot of the new order number in order details and attaches to the Test Details (for verification purposes)
+            
             Helper ElementScreenshot = new(_driver);
-            ElementScreenshot.TakeScreenshotElement(OrderDetailsPage.GetOrderDetails(), "new_order_number");
+            if (Environment.GetEnvironmentVariable("STEPSCREENSHOT") == "true")
+            {
+                // Takes a screenshot of the new order number in order details and attaches to the Test Details (for verification purposes)
+                ElementScreenshot.TakeScreenshotElement(OrderDetailsPage.GetOrderDetails(), "new_order_number");
+            }
 
             // Wait for my account link to be displayed on navigation menu
             MyHelper.WaitForElement(2, By.LinkText("My account"));
@@ -83,9 +86,12 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
             MyAccountPOM MyAccountPage = new(_driver);
             MyAccountPage.goToOrders();
 
-            // Takes a screenshot of the entire orders table in my account and attaches to the Test Details (for verification purposes)
             AllOrdersPOM AllOrdersPage = new(_driver);
-            ElementScreenshot.TakeScreenshotElement(AllOrdersPage.GetAllOrderNumbersTable(), "top_order_from_all_orders");
+            if (Environment.GetEnvironmentVariable("STEPSCREENSHOT") == "true")
+            {
+                // Takes a screenshot of the entire orders table in my account and attaches to the Test Details (for verification purposes)
+                ElementScreenshot.TakeScreenshotElement(AllOrdersPage.GetAllOrderNumbersTable(), "top_order_from_all_orders");
+            }
 
             // Collect the top most order number, this should be the most recent order
             string TopOrderNumber = AllOrdersPage.GetTopOrderNumber();

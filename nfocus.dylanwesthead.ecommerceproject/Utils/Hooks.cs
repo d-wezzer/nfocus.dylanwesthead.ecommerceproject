@@ -3,6 +3,9 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
+using System.IO;
+using System.Reflection.Metadata;
+using System.Xml.Linq;
 using TechTalk.SpecFlow.Infrastructure;
 
 [assembly: Parallelizable(ParallelScope.Fixtures)] //Can only parallelise Features
@@ -62,7 +65,8 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
             {
                 if (_driver is ITakesScreenshot ScreenshotCapture)
                 {
-                    string FileName = Path.ChangeExtension(@"C:\Users\DylanWesthead\source\repos\nfocus.dylanwesthead.ecommerceproject\nfocus.dylanwesthead.ecommerceproject\bin\TestScreenshots\StepScreenshots\" + "StepScreenShot_" + Path.GetRandomFileName(), "png");
+                    DateTime now = DateTime.Now;
+                    string FileName = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\TestScreenshots\StepScreenshots\" + "StepScreenShot_" + $"{now:yyyy-MM-dd_HH_mm_ss}" + ".png"));
 
                     ScreenshotCapture.GetScreenshot().SaveAsFile(FileName);
                     _specflowOutputHelper.AddAttachment(FileName);

@@ -7,6 +7,7 @@
 			<password>thisISaREALLYlongPASS123.</password>
 			<BROWSER>chrome</BROWSER>
 			<!--Set to "true" takes screenshots after each step. Anything else will not.-->
+			<!--WARNING: This generates a lot of images if run extensively without maintenance.-->
 			<STEPSCREENSHOT>false</STEPSCREENSHOT>
 		</EnvironmentVariables>
 	</RunConfiguration>

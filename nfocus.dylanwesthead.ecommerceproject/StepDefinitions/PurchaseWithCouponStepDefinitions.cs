@@ -66,9 +66,12 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
             IJavaScriptExecutor? Js = _driver as IJavaScriptExecutor;
             Js.ExecuteScript("arguments[0].scrollIntoView();", _driver.FindElement(By.CssSelector(".cart-collaterals > div")));
 
-            // Takes a screenshot of the cart totals table and attaches to the Test Details (for verification purposes)
             Helper ElementScreenshot = new(_driver);
-            ElementScreenshot.TakeScreenshotElement(CartPage.GetCartTotalsElement(), "all_cart_totals");
+            if (Environment.GetEnvironmentVariable("STEPSCREENSHOT") == "true")
+            {
+                // Takes a screenshot of the cart totals table and attaches to the Test Details (for verification purposes)
+                ElementScreenshot.TakeScreenshotElement(CartPage.GetCartTotalsElement(), "all_cart_totals");
+            }
 
             Console.WriteLine($"\nTotal before Coupon: £{BasketTotal}\nExpected Total Savings: £{ExpectedCouponSavings}\nActual Total Savings: £{ActualCouponSavings}");
             Console.WriteLine($"\nExpected Total after Coupon: £{ExpectedPriceToPayBeforeShipping}\nActual Total after Coupon: £{ActualPriceToPayBeforeShipping}");
