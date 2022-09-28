@@ -10,16 +10,18 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
             this._driver = driver;
         }
 
-        // Locators
+        // Locators for the orders page and logout link. The => means each time the variable is used, find element is called.
         IWebElement OrdersLink => _driver.FindElement(By.LinkText("Orders"));
         IWebElement LogOutLink => _driver.FindElement(By.LinkText("Logout"));
 
-        public void goToOrders()
+        // Navigates to the orders page link from the my account page.
+        public void GoToOrders()
         {
             OrdersLink.Click();
         }
 
-        public void logOutOfAccount()
+        // Logs out from the my account page.
+        public void LogOutOfAccount()
         {
             LogOutLink.Click();
         }

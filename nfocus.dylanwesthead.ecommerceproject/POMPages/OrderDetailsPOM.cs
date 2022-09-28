@@ -11,12 +11,17 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
             this._driver = driver;
         }
 
-        // Locators
+        // Locators for the order number. The => means each time the variable is used, find element is called.
         IWebElement OrderNumberField => _driver.FindElement(By.CssSelector(".order > strong"));
         IWebElement OrderDetailsFull => _driver.FindElement(By.ClassName("woocommerce-thankyou-order-details"));
 
 
-        public string getOrderNumber()
+        /*
+         * Get the Order Number
+         *   Retrives the order number displayed on the order details page.
+         *   Uses try/catch to repeat process until a valid string is returned. 
+         */
+        public string GetOrderNumber()
         {
             try
             {
@@ -28,6 +33,11 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
             }
         }
 
+
+        /*
+         * Get the Order Details
+         *   Retrieves the order details from the order deails page in the form of an IWebElement.
+         */
         public IWebElement GetOrderDetails()
         {
             return OrderDetailsFull;

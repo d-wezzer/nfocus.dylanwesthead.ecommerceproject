@@ -10,6 +10,9 @@
         public string Phone;
         public string Email;
 
+        /*
+         * The Customer() constructor holds the information required for a customer on the Edgwords eCommerce site.
+         */
         public Customer(string first, string surname, string address, string town, string postcode, string phone, string email)
         {
             this.First = first;
