@@ -5,11 +5,12 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-    
+
 env:
   email: edgewords@example.com
   password: aRandomPassword
   BROWSER: chrome
+  STEPSCREENSHOT: false
   
 jobs:
   build:
@@ -22,26 +23,10 @@ jobs:
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.0.x
-    - name: Install Fluent Assertions package
-      run: dotnet add package FluentAssertions 6.7.0
-    - name: Install Microsoft.Net.Test.Sdk package
-      run: dotnet add package Microsoft.NET.Test.Sdk --version 17.3.1
-    - name: Install NUnit package
-      run: dotnet add package NUnit --version 13.3.1
-    - name: Install NUnit3 Test Adapter package
-      run: dotnet add package NUnit3TestAdapter --version 4.2.1
-    - name: Install Selenium Support package
-      run: dotnet add package Selenium.Support --version 4.4.0
-    - name: Install Selenium WebDriver package
-      run: dotnet add package Selenium.WebDriver --version 4.4.0
-    - name: Install Selenium ChromeDriver package
-      run: dotnet add package Selenium.WebDriver.ChromeDriver --version 105.0.5195.5200
-    - name: Install SpecFlow NUnit package
-      run: dotnet add package SpecFlow.NUnit --version 3.9.74
-    - name: Install SpecFlow Living Doc package
-      run: dotnet add package SpecFlow.Plus.LivingDocPlugin --version 3.9.57
-      
+    - name: Restore dependencies
+      run: dotnet restore
     - name: Build
-      run: dotnet build
+      run: dotnet build --no-restore
     - name: Test
-      run: dotnet test
+      run: dotnet test --no-build --verbosity normal
+
