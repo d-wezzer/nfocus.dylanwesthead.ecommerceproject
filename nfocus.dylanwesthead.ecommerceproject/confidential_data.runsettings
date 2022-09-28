@@ -6,6 +6,8 @@
 			<email>dylan.westhead@nfocus.co.uk</email>
 			<password>thisISaREALLYlongPASS123.</password>
 			<BROWSER>chrome</BROWSER>
+			<!--Set to "true" takes screenshots after each step. Anything else will not.-->
+			<STEPSCREENSHOT>false</STEPSCREENSHOT>
 		</EnvironmentVariables>
 	</RunConfiguration>
 </RunSettings>

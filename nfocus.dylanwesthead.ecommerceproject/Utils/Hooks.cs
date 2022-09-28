@@ -56,13 +56,17 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
 
         [AfterStep]
         public void TakeScreenshotAfterStep()
-        {
-            if (_driver is ITakesScreenshot ScreenshotCapture)
+        {   
+            // Can set the tests to take screenshots after each step, or not through the .runsettings file.
+            if (Environment.GetEnvironmentVariable("STEPSCREENSHOT") == "true")
             {
-                string FileName = Path.ChangeExtension(@"C:\Users\DylanWesthead\source\repos\nfocus.dylanwesthead.ecommerceproject\nfocus.dylanwesthead.ecommerceproject\bin\TestScreenshots\StepScreenshots\" + "StepScreenShot_" + Path.GetRandomFileName(), "png");
+                if (_driver is ITakesScreenshot ScreenshotCapture)
+                {
+                    string FileName = Path.ChangeExtension(@"C:\Users\DylanWesthead\source\repos\nfocus.dylanwesthead.ecommerceproject\nfocus.dylanwesthead.ecommerceproject\bin\TestScreenshots\StepScreenshots\" + "StepScreenShot_" + Path.GetRandomFileName(), "png");
 
-                ScreenshotCapture.GetScreenshot().SaveAsFile(FileName);
-                _specflowOutputHelper.AddAttachment(FileName);
+                    ScreenshotCapture.GetScreenshot().SaveAsFile(FileName);
+                    _specflowOutputHelper.AddAttachment(FileName);
+                }
             }
         }
 
