@@ -24,8 +24,10 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
         {
             ITakesScreenshot SSelem = elem as ITakesScreenshot;
             Screenshot Screenshot = SSelem.GetScreenshot();
-            
-            string FileName = Path.ChangeExtension(@"C:\Users\DylanWesthead\source\repos\nfocus.dylanwesthead.ecommerceproject\nfocus.dylanwesthead.ecommerceproject\bin\TestScreenshots\" + element + "_" + Path.GetRandomFileName() + ".png",  "png");
+
+            DateTime now = DateTime.Now;
+            string FileName = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\TestScreenshots\" + element + "_" + $"{now:yyyy-MM-dd_HH_mm_ss}" + ".png"));
+
             Screenshot.SaveAsFile(FileName, ScreenshotImageFormat.Png);
             TestContext.AddTestAttachment(FileName);
         }
