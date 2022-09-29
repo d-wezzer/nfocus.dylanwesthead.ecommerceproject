@@ -362,5 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-# The runsettings file (contains sensitive data)
-nfocus.dylanwesthead.ecommerceproject/nfocus.dylanwesthead.ecommerceproject/confidential_data.runsettings
+# The runsettings file
+*.runsettings
