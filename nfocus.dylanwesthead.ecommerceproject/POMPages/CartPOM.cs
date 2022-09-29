@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 {
@@ -19,7 +20,8 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         IWebElement ShippingCostField => _driver.FindElement(By.CssSelector("label  bdi"));
         IWebElement GrandTotalField => _driver.FindElement(By.CssSelector("strong > .amount.woocommerce-Price-amount > bdi"));
         IWebElement AllCartTotals => _driver.FindElement(By.CssSelector(".cart-collaterals > div"));
-
+        IWebElement FirstQuantityField => _driver.FindElement(By.ClassName("input-text"));
+        IWebElement UpdateCartButton => _driver.FindElement(By.Name("update_cart"));
 
         // Enters a coupon code into the coupon field. Returns a CartPOM object.
         public CartPOM EnterCoupon(string coupon)
@@ -70,6 +72,31 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         public IWebElement GetCartTotalsElement()
         {
             return AllCartTotals;
+        }
+
+        /* This only works for one product, need to edit to make more robust to handle any product */
+        // Changes the quantity of a product directly from cart
+        public void ChangeProductQuantity(string quantity)
+        {
+            FirstQuantityField.Clear();
+            FirstQuantityField.SendKeys(quantity);
+        }
+
+        // Clicks the button to update the cart
+        public void UpdateCart()
+        {
+            try
+            {
+                // Waits 3 seconds for the update button to be enabled
+                WebDriverWait WaitForUpdateButtonClickable = new WebDriverWait(_driver, TimeSpan.FromSeconds(3));
+                WaitForUpdateButtonClickable.Until(drv => UpdateCartButton.Enabled);
+                UpdateCartButton.Click();
+            }
+            catch
+            {
+                Console.WriteLine("The update button wasn't clickable");
+            }
+
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using nfocus.dylanwesthead.ecommerceproject.POMPages;
 using nfocus.dylanwesthead.ecommerceproject.Utils;
+using OpenQA.Selenium.Support.UI;
 
 namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
 {
@@ -75,6 +76,20 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
             // Go to cart once the cart has updated with the items.
             Myhelper.WaitForElement(2, By.LinkText("View cart"));
             NavBar.GoToCart();
+        }
+
+        /*
+         * [When] "I edit a product quantity directly from the cart"
+         *    - Edits the quantity of a product item to 12345 and updates the cart.
+         */
+        [When(@"I edit product quantity to '([^']*)' directly from cart")]
+        public void WhenIEditProductQuantityToDirectlyFromCart(string quantity)
+        {
+            CartPOM CartPage = new(_driver);
+            // Change product quantity directyl from the cart page
+            CartPage.ChangeProductQuantity(quantity);
+            // Update the totals after editing the cartS
+            CartPage.UpdateCart();
         }
     }
 }

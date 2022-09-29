@@ -36,8 +36,8 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
             Screenshot Screenshot = SSelem.GetScreenshot();
 
             // Find the current date and time, and reformats to a file friendly format.
-            DateTime now = DateTime.Now;
-            string FileName = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\TestScreenshots\" + element + "_" + $"{now:yyyy-MM-dd_HH_mm_ss}" + ".png"));
+            DateTime Now = DateTime.Now;
+            string FileName = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\TestScreenshots\" + element + "_" + $"{Now:yyyy-MM-dd_HH_mm_ss}" + ".png"));
 
             // Saves the screenshot and attaches to the Test Context.
             Screenshot.SaveAsFile(FileName, ScreenshotImageFormat.Png);
