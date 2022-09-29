@@ -20,23 +20,23 @@ namespace nfocus.dylanwesthead.ecommerceproject.Features
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("CreateAndVerifyOrderNumber")]
-    public partial class CreateAndVerifyOrderNumberFeature
+    [NUnit.Framework.DescriptionAttribute("Demonstrate Feature Parallelisation")]
+    public partial class DemonstrateFeatureParallelisationFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
         private static string[] featureTags = ((string[])(null));
         
-#line 1 "CreateAndVerifyOrderNumber.feature"
+#line 1 "FeatureParallelismExample.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "CreateAndVerifyOrderNumber", "When using a valid coupon on the cart screen, 15% of the subtotal price should be" +
-                    " deducted.", ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Demonstrate Feature Parallelisation", "This feature serves to demonstrate running features in paralell, to allow faster " +
+                    "test times and most efficient use of available resources.", ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -81,18 +81,21 @@ namespace nfocus.dylanwesthead.ecommerceproject.Features
 #line 5
  testRunner.Given("I am on the Edgewords eCommerce website", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
+#line 6
+ testRunner.Given("I am logged in", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Creating an order and verify its presence in all orders")]
-        [NUnit.Framework.CategoryAttribute("OrderNumber")]
-        public void CreatingAnOrderAndVerifyItsPresenceInAllOrders()
+        [NUnit.Framework.DescriptionAttribute("Creating a purchase order with a coupon")]
+        [NUnit.Framework.CategoryAttribute("Coupon")]
+        public void CreatingAPurchaseOrderWithACoupon()
         {
             string[] tagsOfScenario = new string[] {
-                    "OrderNumber"};
+                    "Coupon"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Creating an order and verify its presence in all orders", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 8
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Creating a purchase order with a coupon", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 9
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -105,17 +108,17 @@ this.ScenarioInitialize(scenarioInfo);
 #line 4
 this.FeatureBackground();
 #line hidden
-#line 9
- testRunner.Given("I am logged in", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
 #line 10
  testRunner.When("I add products to my cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 11
- testRunner.And("I place the order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I edit product quantity to \'12345\' directly from cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 12
- testRunner.Then("the order number should appear on my orders page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.And("I apply the coupon \'edgewords\' to the cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 13
+ testRunner.Then("\'15\'% of the subtotal is deducted", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

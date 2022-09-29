@@ -3,9 +3,6 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
-using System.IO;
-using System.Reflection.Metadata;
-using System.Xml.Linq;
 using TechTalk.SpecFlow.Infrastructure;
 
 [assembly: Parallelizable(ParallelScope.Fixtures)] // Can only parallelise Features.
