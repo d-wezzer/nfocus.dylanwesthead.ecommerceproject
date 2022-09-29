@@ -1,3 +1,11 @@
+/*
+ * Author: Dylan Westhead
+ * Last Edited: 29/09/2022
+ *
+ *   - The step definitions used by the order verification scenario.
+ *   - Contains all the required information and logic to automate the steps through 
+ *     integration of the POMPages. 
+ */
 using OpenQA.Selenium;
 using NUnit.Framework;
 using OpenQA.Selenium.Support.UI;
@@ -7,13 +15,13 @@ using nfocus.dylanwesthead.ecommerceproject.POMPages;
 namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
 {
     [Binding]
-    public class CreateAndVerifyOrderNumberStepDefinitions
+    internal class CreateAndVerifyOrderNumberStepDefinitions
     {
         private readonly IWebDriver _driver;
         private readonly Customer _customer;
         private readonly ScenarioContext _scenarioContext;
 
-        public CreateAndVerifyOrderNumberStepDefinitions(ScenarioContext scenarioContext)
+        protected private CreateAndVerifyOrderNumberStepDefinitions(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
             this._driver = (IWebDriver)_scenarioContext["driver"];
@@ -27,7 +35,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
          */
 
         [When(@"I place the order")]
-        public void WhenIPlaceTheOrder()
+        protected private void WhenIPlaceTheOrder()
         {
             NavigationBar Navbar = new(_driver);
             Navbar.GoToCheckout();
@@ -54,7 +62,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
          */
 
         [Then(@"the order number should appear on my orders page")]
-        public void ThenTheOrderNumberShouldAppearOnMyOrdersPage()
+        protected private void ThenTheOrderNumberShouldAppearOnMyOrdersPage()
         {
             // Helper to wait for 'problematic' elements.
             Helper MyHelper = new(_driver);

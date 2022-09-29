@@ -1,43 +1,49 @@
-﻿using OpenQA.Selenium;
+﻿/*
+ * Author: Dylan Westhead
+ * Last Edited: 29/09/2022
+ *
+ *   - The Page Object Model for the cart page of the Edgewords eCommerce demo site.
+ */
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
 namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 {
     internal class CartPOM
     {
-        private IWebDriver _driver;
+        private readonly IWebDriver _driver;
 
-        public CartPOM(IWebDriver driver)
+        internal CartPOM(IWebDriver driver)
         {
             this._driver = driver;
         }
 
         // Locators to the required elements on the cart page. The => means each time the variable is used, find element is called.
-        IWebElement CouponCodeField => _driver.FindElement(By.Id("coupon_code"));
-        IWebElement ApplyCouponButton => _driver.FindElement(By.Name("apply_coupon"));
-        IWebElement SubtotalField => _driver.FindElement(By.CssSelector(".cart-subtotal > td > .amount.woocommerce-Price-amount"));
-        IWebElement CouponSavingsField => _driver.FindElement(By.CssSelector(".cart-discount.coupon-edgewords > td > .amount.woocommerce-Price-amount"));
-        IWebElement ShippingCostField => _driver.FindElement(By.CssSelector("label  bdi"));
-        IWebElement GrandTotalField => _driver.FindElement(By.CssSelector("strong > .amount.woocommerce-Price-amount > bdi"));
-        IWebElement AllCartTotals => _driver.FindElement(By.CssSelector(".cart-collaterals > div"));
-        IWebElement FirstQuantityField => _driver.FindElement(By.ClassName("input-text"));
-        IWebElement UpdateCartButton => _driver.FindElement(By.Name("update_cart"));
+        private IWebElement CouponCodeField => _driver.FindElement(By.Id("coupon_code"));
+        private IWebElement ApplyCouponButton => _driver.FindElement(By.Name("apply_coupon"));
+        private IWebElement SubtotalField => _driver.FindElement(By.CssSelector(".cart-subtotal > td > .amount.woocommerce-Price-amount"));
+        private IWebElement CouponSavingsField => _driver.FindElement(By.CssSelector(".cart-discount.coupon-edgewords > td > .amount.woocommerce-Price-amount"));
+        private IWebElement ShippingCostField => _driver.FindElement(By.CssSelector("label  bdi"));
+        private IWebElement GrandTotalField => _driver.FindElement(By.CssSelector("strong > .amount.woocommerce-Price-amount > bdi"));
+        private IWebElement AllCartTotals => _driver.FindElement(By.CssSelector(".cart-collaterals > div"));
+        private IWebElement FirstQuantityField => _driver.FindElement(By.ClassName("input-text"));
+        private IWebElement UpdateCartButton => _driver.FindElement(By.Name("update_cart"));
 
         // Enters a coupon code into the coupon field. Returns a CartPOM object.
-        public CartPOM EnterCoupon(string coupon)
+        internal CartPOM EnterCoupon(string coupon)
         {
             CouponCodeField.SendKeys(coupon);
             return this;
         }
 
         // Clicks the apply coupon button.
-        public void ApplyCoupon()
+        internal void ApplyCoupon()
         {
             ApplyCouponButton.Click();
         }
 
         // Retrieves the Basket Total before the coupon is applied, and removes the £ symbol.
-        public decimal GetSubtotalBeforeCoupon()
+        internal decimal GetSubtotalBeforeCoupon()
         {
             string BasketTotalString = SubtotalField.Text.Replace("£", "");
             decimal BasketTotal = decimal.Parse(BasketTotalString);
@@ -45,7 +51,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         }
 
         // Retrieves the total coupon savings and removes the £ symbol.
-        public decimal GetCouponSavings()
+        internal decimal GetCouponSavings()
         {
             string CouponSavingsString = CouponSavingsField.Text.Replace("£", "");
             decimal CouponSavings = decimal.Parse(CouponSavingsString);
@@ -53,7 +59,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         }
 
         // Retrieve the shipping cost and convert to a decimal.
-        public decimal GetShippingCost()
+        internal decimal GetShippingCost()
         {
             string ShippingCostString = ShippingCostField.Text.Replace("£", "");
             decimal ShippingCost = decimal.Parse(ShippingCostString);
@@ -61,7 +67,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         }
 
         // Retrieves actual grand total displayed on webpage, then converts to decimal.
-        public decimal GetGrandTotal()
+        internal decimal GetGrandTotal()
         {
             string GrandTotalString = GrandTotalField.Text.Replace("£", "");
             decimal GrandTotal = decimal.Parse(GrandTotalString);
@@ -69,21 +75,21 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         }
 
         // Retrieves the entire totals table element.
-        public IWebElement GetCartTotalsElement()
+        internal IWebElement GetCartTotalsElement()
         {
             return AllCartTotals;
         }
 
         /* This only works for one product, need to edit to make more robust to handle any product */
         // Changes the quantity of a product directly from cart
-        public void ChangeProductQuantity(string quantity)
+        internal void ChangeProductQuantity(string quantity)
         {
             FirstQuantityField.Clear();
             FirstQuantityField.SendKeys(quantity);
         }
 
         // Clicks the button to update the cart
-        public void UpdateCart()
+        internal void UpdateCart()
         {
             try
             {

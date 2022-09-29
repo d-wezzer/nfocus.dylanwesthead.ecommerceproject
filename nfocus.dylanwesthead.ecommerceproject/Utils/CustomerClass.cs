@@ -1,17 +1,23 @@
-﻿namespace nfocus.dylanwesthead.ecommerceproject.Utils
+﻿/*
+ * Author: Dylan Westhead
+ * Last Edited: 29/09/2022
+ *
+ *   - The customer object class to create and save the needed properties easily. 
+ */
+namespace nfocus.dylanwesthead.ecommerceproject.Utils
 {
     internal class Customer
     {
-        public string First;
-        public string Surname;
-        public string Address;
-        public string Town;
-        public string Postcode;
-        public string Phone;
-        public string Email;
+        internal string First;
+        internal string Surname;
+        internal string Address;
+        internal string Town;
+        internal string Postcode;
+        internal string Phone;
+        internal string Email;
 
-        /*
-         * The Customer() constructor holds the information required for a customer on the Edgwords eCommerce site.
+        /* The Customer Constructor
+         * Holds the information and logic required to create a customer object for the Edgwords eCommerce site.
          */
         public Customer(string first, string surname, string address, string town, string postcode, string phone, string email)
         {

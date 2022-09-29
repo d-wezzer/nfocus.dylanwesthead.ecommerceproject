@@ -1,4 +1,10 @@
-﻿Feature: edgeWords eCommerce User Tests
+﻿# Author: Dylan Westhead
+# Last Edited: 29/09/2022
+#
+#   - Feature file for the two user tests of the project. Scenarios are labelled and tagged accordingly. 
+#	- Background scenario used where the Given steps cross over between scenarios.
+
+Feature: edgeWords eCommerce User Tests
 We want to test the following two end-to-end user scenarios:
 1. @OrderNumber
    After successfully placing an order, the new order number should be present in the orders history page (containing all orders).
