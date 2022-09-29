@@ -1,4 +1,10 @@
-﻿using NUnit.Framework;
+﻿/*
+ * Author: Dylan Westhead
+ * Last Edited: 29/09/2022
+ *
+ *   - Contains helper functions that are used throughout the program frequently; helps prevent code duplication.
+ */
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
@@ -6,19 +12,20 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
 {
     internal class Helper
     {
-        private IWebDriver _driver;
+        private readonly IWebDriver _driver;
 
-        public Helper(IWebDriver driver)
+        internal Helper(IWebDriver driver)
         {
             this._driver = driver;
         }
 
 
         /*
-         * The WaitForElement() function waits for a given amount of time for an element to be displayed.
-         * If timeout occurs, an exception is thrown. Helps to prevent stale element exceptions.
+         * Wait for an Element to be Displayed
+         *   - The WaitForElement() function waits for a given amount of time for an element to be displayed.
+         *   - If timeout occurs, an exception is thrown. Helps to prevent stale element exceptions.
          */
-        public void WaitForElement(int seconds, By locator)
+        internal void WaitForElement(int seconds, By locator)
         {
             WebDriverWait WaitForElemDisplay = new WebDriverWait(_driver, TimeSpan.FromSeconds(seconds));
             WaitForElemDisplay.Until(drv => drv.FindElement(locator).Displayed);
@@ -27,10 +34,10 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
 
         /*
          * Take Screenshot of an Element
-         *   The TakeScreenshotElement() function takes a screenshot of given element, and customises the file name.
-         *   The file name is respective to the element, timestamped to the current date and time, and stored in the TestSceenshots directory.
+         *   - The TakeScreenshotElement() function takes a screenshot of given element, and customises the file name.
+         *   - The file name is respective to the element, timestamped to the current date and time, and stored in the TestSceenshots directory.
          */
-        public void TakeScreenshotElement(IWebElement elem, string element)
+        internal void TakeScreenshotElement(IWebElement elem, string element)
         {
             ITakesScreenshot SSelem = elem as ITakesScreenshot;
             Screenshot Screenshot = SSelem.GetScreenshot();

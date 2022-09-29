@@ -1,3 +1,11 @@
+/*
+ * Author: Dylan Westhead
+ * Last Edited: 29/09/2022
+ *
+ *   - The step definitions used by the coupon scenario.
+ *   - Contains all the required information and logic to automate the steps through 
+ *     integration of the POMPages. 
+ */
 using OpenQA.Selenium;
 using NUnit.Framework;
 using nfocus.dylanwesthead.ecommerceproject.POMPages;
@@ -6,12 +14,12 @@ using nfocus.dylanwesthead.ecommerceproject.Utils;
 namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
 {
     [Binding]
-    public class PurchaseWithCouponStepDefinitions
+    internal class PurchaseWithCouponStepDefinitions
     {
-        private IWebDriver _driver;
+        private readonly IWebDriver _driver;
         private readonly ScenarioContext _scenarioContext;
 
-        public PurchaseWithCouponStepDefinitions(ScenarioContext scenarioContext)
+        protected private PurchaseWithCouponStepDefinitions(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
             this._driver = (IWebDriver)_scenarioContext["driver"];
@@ -23,10 +31,10 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
          *    - Applies the 'edgewords' 15% off coupon to the cart.
          */
         [When(@"I apply the coupon '([^']*)' to the cart")]
-        public void WhenIApplyTheCouponToTheCart(string coupon)
+        protected private void WhenIApplyTheCouponToTheCart(string coupon)
         {   
             // Fix this to an explicit wait. Stale element exception on coupon input field without wait.
-            Thread.Sleep(1000);
+            Thread.Sleep(2500);
 
             // Apply the 15% off coupon
             CartPOM CartPage = new(_driver);
@@ -43,7 +51,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
          *    - Calculates and verifies the coupon savings as well as the grand total.
          */
         [Then(@"'([^']*)'% of the subtotal is deducted")]
-        public void ThenOfTheSubtotalIsDeducted(int savingsPercentage)
+        protected private void ThenOfTheSubtotalIsDeducted(int savingsPercentage)
         {
             CartPOM CartPage = new(_driver);
 
