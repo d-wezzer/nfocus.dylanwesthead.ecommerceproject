@@ -109,7 +109,7 @@ this.ScenarioInitialize(scenarioInfo);
 this.FeatureBackground();
 #line hidden
 #line 16
- testRunner.When("I add products to my cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I add \'Hoodie with Logo\' and \'Cap\' to my cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 17
  testRunner.And("I edit product quantity to \'123\' directly from cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");

@@ -1,6 +1,6 @@
 ﻿/*
  * Author: Dylan Westhead
- * Last Edited: 29/09/2022
+ * Last Edited: 01/10/2022
  *
  *   - The step definitions used by both the order number verification and coupon scenarios.
  *   - Contains all the required information and logic to automate the steps through 
@@ -63,26 +63,22 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
 
 
         /*
-         * [When] "I add products to my cart"
-         *    - Adds two products to the cart, the 'Hoodie with Logo' and the 'Cap'. 
+         * [When] "I add product1 and product2 to my cart"
+         *    - Adds two products to the cart, the 'Hoodie with Logo' and the 'Cap' by default. 
          */
-        [When(@"I add products to my cart")]
-        protected private void WhenIAddProductsToMyCart()
+        [When(@"I add '([^']*)' and '([^']*)' to my cart")]
+        protected private void WhenIAddAndToMyCart(string product1, string product2)
         {
-            // Go to shop.
             NavigationBar NavBar = new(_driver);
-            NavBar.GoToShop();
-
-            // Allow store contents one second to load.
-            Helper Myhelper = new(_driver);
-            Myhelper.WaitForElement(1, By.XPath("//main[@id='main']/ul//a[@href='?add-to-cart=31']"));
-
-            // Add items to the cart.
             ShopPOM ShopPage = new(_driver);
-            ShopPage.AddItemsToCart();
 
-            // Go to cart once the cart has updated with the items.
-            Myhelper.WaitForElement(2, By.LinkText("View cart"));
+            // Loop through the products passed in though feature files.
+            ShopPage.SearchForAndAddProduct(product1, product2);
+
+            // Adds the item to cart, should only be one button.
+            ShopPage.AddItemToCart();
+
+            // Go to cart once updated with the items.
             NavBar.GoToCart();
         }
 
@@ -93,9 +89,10 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
         [When(@"I edit product quantity to '([^']*)' directly from cart")]
         protected private void WhenIEditProductQuantityToDirectlyFromCart(string quantity)
         {
-            CartPOM CartPage = new(_driver);
             // Change product quantity directyl from the cart page
+            CartPOM CartPage = new(_driver);
             CartPage.ChangeProductQuantity(quantity);
+
             // Update the totals after editing the cartS
             CartPage.UpdateCart();
         }
