@@ -4,7 +4,7 @@
 #   - Feature file running different features at the same time for demonstration purposes.
 #	- The feature and scenario in this file do not contribute to the initial tests.
 
-Feature: Demonstrate Feature Parallelisation
+Feature: (demo)Demonstrate Feature Parallelisation
 This feature serves to demonstrate running features in paralell, to allow faster test times and most efficient use of available resources.
 
 Background:
@@ -12,7 +12,7 @@ Background:
 	Given I am logged in
 
 @Coupon
-Scenario: Creating a purchase order with a coupon
+Scenario: (demo)Creating a purchase order with a coupon
 	When I add 'Hoodie with Logo' and 'Cap' to my cart
 	And I edit product quantity to '12' directly from cart
 	And I apply the coupon 'edgewords' to the cart

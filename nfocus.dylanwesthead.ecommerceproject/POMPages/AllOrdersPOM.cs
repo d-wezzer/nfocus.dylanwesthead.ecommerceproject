@@ -18,13 +18,13 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         }
 
         // Locators used to gather the most recent order number from the order history page.
-        private IWebElement OrderNumbers => _driver.FindElement(By.CssSelector(".woocommerce-orders-table__cell-order-number"));
+        private IWebElement OrderNumbers => _driver.FindElement(By.ClassName("woocommerce-orders-table__cell-order-number"));
         private IWebElement AllOrderNumbersTable => _driver.FindElement(By.ClassName("woocommerce-MyAccount-orders"));
 
         // Retrieves the top most recent order number.
         internal string GetTopOrderNumber()
         {
-            return OrderNumbers.Text;
+            return OrderNumbers.Text.Replace("#", "");
         }
 
         // Retrieves the entire row of order numbers on the first page of the order history.

@@ -107,7 +107,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
         [After]
         protected private void Teardown()
         {
-            Thread.Sleep(5000);
+            Thread.Sleep(3500);
             _driver.Quit();
         }
     }

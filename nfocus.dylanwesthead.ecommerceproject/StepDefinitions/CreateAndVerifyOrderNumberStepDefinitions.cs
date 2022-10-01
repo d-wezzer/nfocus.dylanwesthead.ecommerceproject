@@ -45,8 +45,17 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
             CheckoutPage.PopulateBillingInfo(_customer.First, _customer.Surname, _customer.Address, _customer.Town,
                 _customer.Postcode, _customer.Phone, _customer.Email);
 
-            // Click the radio button to pay by cheque (NOT cash) and then place order.
-            CheckoutPage.SelectPayByCheque();
+            // Click the radio button to pay by cheque (NOT cash).
+            try // Cheque radio button is extremely fragile to stale elements.
+            {
+                CheckoutPage.SelectPayByCheque();
+            }
+            catch
+            {
+                CheckoutPage.SelectPayByCheque();
+            }
+
+            // Place the order.
             CheckoutPage.PlaceOrder();
 
             // Wait for the order details page to be displayed. Creating an order takes a few seconds.
@@ -101,7 +110,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
             // Collect the top most order number, this should be the most recent order.
             string TopOrderNumber = AllOrdersPage.GetTopOrderNumber();
 
-            Console.WriteLine($"\nYour new order number: #{NewOrderNumber}\nOrders table contains: {TopOrderNumber}\n");
+            Console.WriteLine($"\nYour new order number: {NewOrderNumber}\nOrders table contains: {TopOrderNumber}\n");
             Assert.That(TopOrderNumber, Does.Contain(NewOrderNumber), $"The order with order number {NewOrderNumber} was not found on your orders page");
 
         }

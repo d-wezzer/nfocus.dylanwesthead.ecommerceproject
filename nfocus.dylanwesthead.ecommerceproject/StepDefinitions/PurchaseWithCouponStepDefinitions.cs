@@ -33,8 +33,8 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
         [When(@"I apply the coupon '([^']*)' to the cart")]
         protected private void WhenIApplyTheCouponToTheCart(string coupon)
         {   
-            // Fix this to an explicit wait. Stale element exception on coupon input field without wait.
-            Thread.Sleep(2500);
+            // Stale element exception on coupon input field without wait.
+            Thread.Sleep(3000);
 
             // Apply the 15% off coupon
             CartPOM CartPage = new(_driver);

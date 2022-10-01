@@ -21,18 +21,26 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         // Locators to the required elements on the cart page. The => means each time the variable is used, find element is called.
         private IWebElement CouponCodeField => _driver.FindElement(By.Id("coupon_code"));
         private IWebElement ApplyCouponButton => _driver.FindElement(By.Name("apply_coupon"));
-        private IWebElement SubtotalField => _driver.FindElement(By.CssSelector(".cart-subtotal > td > .amount.woocommerce-Price-amount"));
-        private IWebElement CouponSavingsField => _driver.FindElement(By.CssSelector(".cart-discount.coupon-edgewords > td > .amount.woocommerce-Price-amount"));
-        private IWebElement ShippingCostField => _driver.FindElement(By.CssSelector("label  bdi"));
-        private IWebElement GrandTotalField => _driver.FindElement(By.CssSelector("strong > .amount.woocommerce-Price-amount > bdi"));
-        private IWebElement AllCartTotals => _driver.FindElement(By.CssSelector(".cart-collaterals > div"));
+        private IWebElement SubtotalField => _driver.FindElement(By.CssSelector(".cart-subtotal > td > .amount"));
+        private IWebElement CouponSavingsField => _driver.FindElement(By.CssSelector(".coupon-edgewords > td > .amount"));
+        private IWebElement ShippingCostField => _driver.FindElement(By.CssSelector("label bdi"));
+        private IWebElement GrandTotalField => _driver.FindElement(By.CssSelector("strong > .amount"));
+        private IWebElement AllCartTotals => _driver.FindElement(By.ClassName("cart_totals"));
         private IWebElement FirstQuantityField => _driver.FindElement(By.ClassName("input-text"));
         private IWebElement UpdateCartButton => _driver.FindElement(By.Name("update_cart"));
 
         // Enters a coupon code into the coupon field. Returns a CartPOM object.
         internal CartPOM EnterCoupon(string coupon)
-        {
-            CouponCodeField.SendKeys(coupon);
+        {   // Try catch again to help prevent stale element exceptions
+            try
+            {
+                CouponCodeField.SendKeys(coupon);
+            }
+            catch
+            {
+                CouponCodeField.SendKeys(coupon);
+            }
+
             return this;
         }
 
@@ -40,6 +48,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         internal void ApplyCoupon()
         {
             ApplyCouponButton.Click();
+            
         }
 
         // Retrieves the Basket Total before the coupon is applied, and removes the £ symbol.

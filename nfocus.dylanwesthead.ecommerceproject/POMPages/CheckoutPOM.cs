@@ -91,7 +91,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 
         // Clicks the pay by dheque radio button.
         // Uses a try/catch to repeat the process and prevent stale element exceptions.
-        internal void SelectPayByCheque()
+        internal bool SelectPayByCheque()
         {
             try // Always perform at least once.
             {
@@ -100,7 +100,9 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
             catch // Run function again if the 'try' attempt failed.
             {
                 PayByChequeRadioButton.Click();
+                return false;
             }
+            return true;
         }
 
         // Clicks the place order button.
