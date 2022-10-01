@@ -16,7 +16,7 @@ Background:
 	Given I am logged in
 
 @OrderNumber
-Scenario: Creating an order and verify its presence in all orders
+Scenario: Create order and verify its presence in all orders
 	When I add 'Hoodie with Logo' and 'Cap' to my cart
 	And I place the order
 	Then the order number should appear on my orders page
@@ -26,7 +26,7 @@ Scenario: Creating an order and verify its presence in all orders
 #		Can essentially add any item that is available on the eCommerce site (case sensitive).
 	
 @Coupon
-Scenario: Creating a purchase order with a coupon
+Scenario: Create purchase order with coupon
 	When I add 'Hoodie with Logo' and 'Cap' to my cart
 	And I apply the coupon 'edgewords' to the cart
 	Then '15'% of the subtotal is deducted

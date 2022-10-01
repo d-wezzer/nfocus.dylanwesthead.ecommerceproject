@@ -1,6 +1,6 @@
 /*
  * Author: Dylan Westhead
- * Last Edited: 29/09/2022
+ * Last Edited: 01/10/2022
  *
  *   - The step definitions used by the coupon scenario.
  *   - Contains all the required information and logic to automate the steps through 

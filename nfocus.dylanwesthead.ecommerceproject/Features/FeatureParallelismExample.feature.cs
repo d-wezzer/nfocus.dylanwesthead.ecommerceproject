@@ -87,14 +87,14 @@ namespace nfocus.dylanwesthead.ecommerceproject.Features
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("(demo)Creating a purchase order with a coupon")]
+        [NUnit.Framework.DescriptionAttribute("(demo)Create purchase order with coupon")]
         [NUnit.Framework.CategoryAttribute("Coupon")]
-        public void DemoCreatingAPurchaseOrderWithACoupon()
+        public void DemoCreatePurchaseOrderWithCoupon()
         {
             string[] tagsOfScenario = new string[] {
                     "Coupon"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("(demo)Creating a purchase order with a coupon", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("(demo)Create purchase order with coupon", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 15
 this.ScenarioInitialize(scenarioInfo);
 #line hidden

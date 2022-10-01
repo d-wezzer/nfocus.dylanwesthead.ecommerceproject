@@ -90,14 +90,14 @@ namespace nfocus.dylanwesthead.ecommerceproject.Features
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Creating an order and verify its presence in all orders")]
+        [NUnit.Framework.DescriptionAttribute("Create order and verify its presence in all orders")]
         [NUnit.Framework.CategoryAttribute("OrderNumber")]
-        public void CreatingAnOrderAndVerifyItsPresenceInAllOrders()
+        public void CreateOrderAndVerifyItsPresenceInAllOrders()
         {
             string[] tagsOfScenario = new string[] {
                     "OrderNumber"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Creating an order and verify its presence in all orders", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create order and verify its presence in all orders", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 19
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -125,14 +125,14 @@ this.FeatureBackground();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Creating a purchase order with a coupon")]
+        [NUnit.Framework.DescriptionAttribute("Create purchase order with coupon")]
         [NUnit.Framework.CategoryAttribute("Coupon")]
-        public void CreatingAPurchaseOrderWithACoupon()
+        public void CreatePurchaseOrderWithCoupon()
         {
             string[] tagsOfScenario = new string[] {
                     "Coupon"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Creating a purchase order with a coupon", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create purchase order with coupon", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 29
 this.ScenarioInitialize(scenarioInfo);
 #line hidden

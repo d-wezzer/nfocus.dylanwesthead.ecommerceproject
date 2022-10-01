@@ -1,6 +1,6 @@
 ﻿/*
  * Author: Dylan Westhead
- * Last Edited: 29/09/2022
+ * Last Edited: 01/10/2022
  *
  *   - The Page Object Model for the cart page of the Edgewords eCommerce demo site.
  */

@@ -1,6 +1,6 @@
 ﻿/*
  * Author: Dylan Westhead
- * Last Edited: 29/09/2022
+ * Last Edited: 01/10/2022
  *
  *   - The hooks class is a cucumber class used to perform tasks at given points in the test process.
  *   - Contains methods to setup the environment, clean up the environment when finished, and scrrenshot after each test step.
@@ -11,6 +11,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
+using System.Globalization;
 using TechTalk.SpecFlow.Infrastructure;
 
 [assembly: Parallelizable(ParallelScope.Fixtures)] // Can only parallelise Features.
@@ -85,11 +86,16 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
             // Can set the tests to take screenshots after each step, or not through the .runsettings file.
             if (Environment.GetEnvironmentVariable("STEPSCREENSHOT") == "true")
             {
+                TextInfo info = CultureInfo.CurrentCulture.TextInfo;
                 if (_driver is ITakesScreenshot ScreenshotCapture)
                 {
+                    // Retrieve current scenario in PascalCasing.
+                    string scenario = _scenarioContext.ScenarioInfo.Title.ToLower();
+                    scenario = info.ToTitleCase(scenario).Replace(" ", string.Empty);
+
                     // Get the current date and time in format YYYY-mm-dd_DD-hh-ss, and add that to file name.
                     DateTime now = DateTime.Now;
-                    string FileName = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\TestScreenshots\StepScreenshots\" + "StepScreenShot_" + $"{now:yyyy-MM-dd_HH_mm_ss}" + ".png"));
+                    string FileName = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\TestScreenshots\StepScreenshots\" + scenario + $"{now:yyyy-MM-dd_HH_mm_ss}" + ".png"));
 
                     // Saves the screenshot to the correct path, and adds it to the Living Doc report.
                     ScreenshotCapture.GetScreenshot().SaveAsFile(FileName);

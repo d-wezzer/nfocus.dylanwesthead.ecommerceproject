@@ -12,7 +12,7 @@ Background:
 	Given I am logged in
 
 @Coupon
-Scenario: (demo)Creating a purchase order with a coupon
+Scenario: (demo)Create purchase order with coupon
 	When I add 'Hoodie with Logo' and 'Cap' to my cart
 	And I edit product quantity to '12' directly from cart
 	And I apply the coupon 'edgewords' to the cart

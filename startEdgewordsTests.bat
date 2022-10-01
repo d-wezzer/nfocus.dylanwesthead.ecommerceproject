@@ -67,7 +67,7 @@ SET password=aRandomPassword
 SET BROWSER=chrome
 
 :: True will take screenshots of the running tests.
-SET STEPSCREENSHOT=true
+SET STEPSCREENSHOT=false
 
 :: Get date in format to use with file name.
 SET datestr=%date%
