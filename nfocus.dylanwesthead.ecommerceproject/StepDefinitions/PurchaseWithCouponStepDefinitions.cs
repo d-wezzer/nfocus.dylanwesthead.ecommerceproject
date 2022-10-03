@@ -36,13 +36,9 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
             // Stale element exception on coupon input field without wait.
             Thread.Sleep(3000);
 
-            // Apply the 15% off coupon
+            // Apply the provided coupon
             CartPOM CartPage = new(_driver);
             CartPage.EnterCoupon(coupon).ApplyCoupon();
-
-            // Wait for the coupon to be applied (if not already)
-            Helper WaitForCoupon = new Helper(_driver);
-            WaitForCoupon.WaitForElement(3, By.ClassName("cart-discount"));
         }
 
 
@@ -76,13 +72,8 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
             Js.ExecuteScript("arguments[0].scrollIntoView();", _driver.FindElement(By.CssSelector(".cart-collaterals > div")));
 
             // If the environment variable SCREENSHOT is true, then take a screenshot.
-            Helper ElementScreenshot = new(_driver);
-            if (Environment.GetEnvironmentVariable("STEPSCREENSHOT") == "true")
-            {
-                // Takes a screenshot of the cart totals table and attaches to the Test Details (for verification purposes).
-                ElementScreenshot.TakeScreenshotElement(CartPage.GetCartTotalsElement(), "all_cart_totals");
-            }
-
+            CartPage.TakeScreenshotTotals();
+            
             Console.WriteLine($"\nTotal before Coupon: £{BasketTotal}\nExpected Total Savings: £{ExpectedCouponSavings}\nActual Total Savings: £{ActualCouponSavings}");
             Console.WriteLine($"\nExpected Total after Coupon: £{ExpectedPriceToPayBeforeShipping}\nActual Total after Coupon: £{ActualPriceToPayBeforeShipping}");
             Console.WriteLine($"Shipping Cost: £{ShippingCost}\n\nExpected Grand Total: £{PriceToPay}\nActual Grand Total: £{GrandTotal}\n");

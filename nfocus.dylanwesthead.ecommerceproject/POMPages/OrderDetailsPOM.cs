@@ -4,6 +4,7 @@
  *
  *   - The Page Object Model for the order details page of the Edgewords eCommerce demo site. 
  */
+using nfocus.dylanwesthead.ecommerceproject.Utils;
 using OpenQA.Selenium;
 
 namespace nfocus.dylanwesthead.ecommerceproject.POMPages
@@ -19,7 +20,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 
         // Locators for the order number. The => means each time the variable is used, find element is called.
         private IWebElement OrderNumberField => _driver.FindElement(By.CssSelector(".order > strong"));
-        private IWebElement OrderDetailsFull => _driver.FindElement(By.ClassName("woocommerce-thankyou-order-details"));
+        private IWebElement OrderConfirmationFull => _driver.FindElement(By.ClassName("woocommerce-thankyou-order-details"));
 
 
         /*
@@ -29,6 +30,9 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
          */
         internal string GetOrderNumber()
         {
+            // Takes a screenshot of the newly generated order number.
+            ScreenshotNewOrderNumber();
+
             try
             {
                 return OrderNumberField.Text;
@@ -42,11 +46,14 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 
         /*
          * Get the Order Details
-         *   - Retrieves the order details from the order deails page in the form of an IWebElement.
+         *   - Retrieves the order details from the order details page as a screenshot.
+         *   - Attaches screenshot to the test report details.
          */
-        internal IWebElement GetOrderDetails()
+        internal void ScreenshotNewOrderNumber()
         {
-            return OrderDetailsFull;
+            Helper ElementScreenshot = new(_driver);
+            // Takes a screenshot of the new order number and attaches to the Test Details (for verification purposes).
+            ElementScreenshot.TakeScreenshotElement(OrderConfirmationFull, "new_order_number");
         }
     }
 }

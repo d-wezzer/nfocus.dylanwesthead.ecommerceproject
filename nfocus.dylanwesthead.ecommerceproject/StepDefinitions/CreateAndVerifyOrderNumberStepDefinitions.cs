@@ -55,12 +55,9 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
                 CheckoutPage.SelectPayByCheque();
             }
 
-            // Place the order.
+            // Place the order and wait for confirmation.
             CheckoutPage.PlaceOrder();
-
-            // Wait for the order details page to be displayed. Creating an order takes a few seconds.
-            WebDriverWait WaitForOrderConfirmation = new(_driver, TimeSpan.FromSeconds(5));
-            WaitForOrderConfirmation.Until(drv => drv.FindElement(By.ClassName("entry-title")).Text.Contains("Order received"));
+            CheckoutPage.WaitForOrderConfirmed();
         }
 
 
@@ -73,41 +70,20 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
         [Then(@"the order number should appear on my orders page")]
         protected private void ThenTheOrderNumberShouldAppearOnMyOrdersPage()
         {
-            // Helper to wait for 'problematic' elements.
-            Helper MyHelper = new(_driver);
-
             // Retrieves the unique order number.
             OrderDetailsPOM OrderDetailsPage = new(_driver);
             string NewOrderNumber = OrderDetailsPage.GetOrderNumber();
-            
-            Helper ElementScreenshot = new(_driver);
-            if (Environment.GetEnvironmentVariable("STEPSCREENSHOT") == "true")
-            {
-                // Takes a screenshot of the new order number in order details and attaches to the Test Details (for verification purposes).
-                ElementScreenshot.TakeScreenshotElement(OrderDetailsPage.GetOrderDetails(), "new_order_number");
-            }
 
-            // Wait for my account link to be displayed on navigation menu.
-            MyHelper.WaitForElement(2, By.LinkText("My account"));
-
+            // Navigate to the my account page.
             NavigationBar NavBar = new(_driver);
             NavBar.GoToMyAccount();
-
-            // Wait for the orders link to be displayed in the side menu.
-            MyHelper.WaitForElement(2, By.LinkText("Orders"));
 
             // Go to the orders page to see all successfully placed orders.
             MyAccountPOM MyAccountPage = new(_driver);
             MyAccountPage.GoToOrders();
 
-            AllOrdersPOM AllOrdersPage = new(_driver);
-            if (Environment.GetEnvironmentVariable("STEPSCREENSHOT") == "true")
-            {
-                // Takes a screenshot of the entire orders table in my account and attaches to the Test Details (for verification purposes).
-                ElementScreenshot.TakeScreenshotElement(AllOrdersPage.GetAllOrderNumbersTable(), "top_order_from_all_orders");
-            }
-
             // Collect the top most order number, this should be the most recent order.
+            AllOrdersPOM AllOrdersPage = new(_driver);
             string TopOrderNumber = AllOrdersPage.GetTopOrderNumber();
 
             Console.WriteLine($"\nYour new order number: {NewOrderNumber}\nOrders table contains: {TopOrderNumber}\n");

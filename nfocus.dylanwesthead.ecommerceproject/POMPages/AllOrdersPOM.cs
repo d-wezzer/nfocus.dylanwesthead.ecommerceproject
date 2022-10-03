@@ -4,6 +4,7 @@
  *
  *   - The Page Object Model for the order history page of the Edgewords eCommerce demo site. 
  */
+using nfocus.dylanwesthead.ecommerceproject.Utils;
 using OpenQA.Selenium;
 
 namespace nfocus.dylanwesthead.ecommerceproject.POMPages
@@ -24,6 +25,10 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         // Retrieves the top most recent order number.
         internal string GetTopOrderNumber()
         {
+            // Screenshot the entire orders table.
+            ScreenshotAllOrders();
+
+            // Remove the # symbol for a pure digit string.
             return OrderNumbers.Text.Replace("#", "");
         }
 
@@ -31,6 +36,13 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         internal IWebElement GetAllOrderNumbersTable()
         {
             return AllOrderNumbersTable;
+        }
+
+        internal void ScreenshotAllOrders()
+        {
+            Helper ElementScreenshot = new(_driver);
+            // Takes a screenshot of the entire orders table in my account and attaches to the Test Details (for verification purposes).
+            ElementScreenshot.TakeScreenshotElement(AllOrderNumbersTable, "top_order_from_all_orders");
         }
     }
 }

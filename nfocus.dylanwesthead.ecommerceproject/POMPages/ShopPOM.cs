@@ -6,6 +6,7 @@
  */
 using nfocus.dylanwesthead.ecommerceproject.Utils;
 using OpenQA.Selenium;
+using OpenQA.Selenium.DevTools.V102.Network;
 
 namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 {
@@ -20,7 +21,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         // Locators for items in shop. The => means each time the variable is used, find element is called.
         private IWebElement SearchBar => _driver.FindElement(By.Id("woocommerce-product-search-field-0"));
         private IWebElement AddToCartButton => _driver.FindElement(By.ClassName("single_add_to_cart_button"));
-
+        private IWebElement ViewCartLink => _driver.FindElement(By.LinkText("View cart"));
 
         /*
          * Search for Product and Add to Cart

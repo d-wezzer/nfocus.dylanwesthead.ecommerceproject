@@ -5,6 +5,7 @@
  *   - The object model for the navigation bar. Saves repeating the same code in each of the POMPages.
  */
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace nfocus.dylanwesthead.ecommerceproject.Utils
 {
@@ -57,8 +58,11 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
         // Navigates to the Edgewords eCommerce my account page.
         internal void GoToMyAccount()
         {
+            // Wait for my account link to be displayed on navigation menu.
+            Helper WaitForMyAccount = new(_driver);
+            WaitForMyAccount.WaitForElement(2, By.LinkText("My account"));
+
             MyAccountLink.Click();
         }
-
     }
 }

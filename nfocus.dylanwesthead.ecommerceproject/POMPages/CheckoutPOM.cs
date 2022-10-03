@@ -5,6 +5,7 @@
  *   - The Page Object Model for the checkout page of the Edgewords eCommerce demo site. 
  */
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 {
@@ -117,6 +118,19 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
             {
                 PlaceOrderButton.Click();
             }
+        }
+
+        /*
+         * Wait for Order to be Received
+         *   - Waits for the entry text 'Order Received' to be displayed.
+         *   - An explicit wait of 5 seconds has been allowed before timeout.
+         */
+        internal void WaitForOrderConfirmed()
+        {
+            // Wait for the order details page to be displayed. Creating an order takes a few seconds.
+            WebDriverWait WaitForOrderConfirmation = new(_driver, TimeSpan.FromSeconds(5));
+            WaitForOrderConfirmation.Until(drv => drv.FindElement(By.ClassName("entry-title")).Text.Contains("Order received"));
+
         }
     }
 }

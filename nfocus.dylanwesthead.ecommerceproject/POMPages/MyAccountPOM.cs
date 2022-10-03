@@ -4,6 +4,7 @@
  *
  *   - The Page Object Model for the my account page of the Edgewords eCommerce demo site. 
  */
+using nfocus.dylanwesthead.ecommerceproject.Utils;
 using OpenQA.Selenium;
 
 namespace nfocus.dylanwesthead.ecommerceproject.POMPages
@@ -23,6 +24,10 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         // Navigates to the orders page link from the my account page.
         internal void GoToOrders()
         {
+            // Wait for the orders link to be displayed in the side menu.
+            Helper WaitForOrders = new(_driver);
+            WaitForOrders.WaitForElement(2, By.LinkText("Orders"));
+
             OrdersLink.Click();
         }
 

@@ -4,6 +4,7 @@
  *
  *   - The Page Object Model for the cart page of the Edgewords eCommerce demo site.
  */
+using nfocus.dylanwesthead.ecommerceproject.Utils;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
@@ -28,6 +29,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         private IWebElement AllCartTotals => _driver.FindElement(By.ClassName("cart_totals"));
         private IWebElement FirstQuantityField => _driver.FindElement(By.ClassName("input-text"));
         private IWebElement UpdateCartButton => _driver.FindElement(By.Name("update_cart"));
+        //private IWebElement DiscountField => _driver.FindElement(By.ClassName("coupon-edgewords"));
 
         // Enters a coupon code into the coupon field. Returns a CartPOM object.
         internal CartPOM EnterCoupon(string coupon)
@@ -44,11 +46,14 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
             return this;
         }
 
-        // Clicks the apply coupon button.
+        // Clicks the apply coupon button and waits for it to be applied.
         internal void ApplyCoupon()
         {
             ApplyCouponButton.Click();
-            
+
+            // Wait for the coupon to be applied (if not already)
+            Helper WaitForCoupon = new Helper(_driver);
+            WaitForCoupon.WaitForElement(3, By.ClassName("cart-discount"));
         }
 
         // Retrieves the Basket Total before the coupon is applied, and removes the £ symbol.
@@ -112,6 +117,17 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
                 Console.WriteLine("The update button wasn't clickable");
             }
 
+        }
+
+        internal void TakeScreenshotTotals()
+        {
+            Helper ssHelper = new(_driver);
+
+            if (Environment.GetEnvironmentVariable("STEPSCREENSHOT") == "true")
+            {
+                // Takes a screenshot of the cart totals table and attaches to the Test Details (for verification purposes).
+                ssHelper.TakeScreenshotElement(GetCartTotalsElement(), "all_cart_totals");
+            }
         }
     }
 }
