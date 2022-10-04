@@ -18,7 +18,8 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         }
 
         // Locators for the orders page and logout link. The => means each time the variable is used, find element is called.
-        private IWebElement OrdersLink => _driver.FindElement(By.LinkText("Orders"));
+        private readonly By _OrdersLinkLocator = By.LinkText("Orders");
+        private IWebElement OrdersLink => _driver.FindElement(_OrdersLinkLocator);
         private IWebElement LogOutLink => _driver.FindElement(By.LinkText("Logout"));
 
         // Navigates to the orders page link from the my account page.
@@ -26,7 +27,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         {
             // Wait for the orders link to be displayed in the side menu.
             Helper WaitForOrders = new(_driver);
-            WaitForOrders.WaitForElement(2, By.LinkText("Orders"));
+            WaitForOrders.WaitForElement(2, _OrdersLinkLocator);
 
             OrdersLink.Click();
         }

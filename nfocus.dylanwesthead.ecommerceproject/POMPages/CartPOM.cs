@@ -20,6 +20,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         }
 
         // Locators to the required elements on the cart page. The => means each time the variable is used, find element is called.
+        private readonly By _CartDiscountLocator = By.ClassName("cart-discount");
         private IWebElement CouponCodeField => _driver.FindElement(By.Id("coupon_code"));
         private IWebElement ApplyCouponButton => _driver.FindElement(By.Name("apply_coupon"));
         private IWebElement SubtotalField => _driver.FindElement(By.CssSelector(".cart-subtotal > td > .amount"));
@@ -29,7 +30,6 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         private IWebElement AllCartTotals => _driver.FindElement(By.ClassName("cart_totals"));
         private IWebElement FirstQuantityField => _driver.FindElement(By.ClassName("input-text"));
         private IWebElement UpdateCartButton => _driver.FindElement(By.Name("update_cart"));
-        //private IWebElement DiscountField => _driver.FindElement(By.ClassName("coupon-edgewords"));
 
         // Enters a coupon code into the coupon field. Returns a CartPOM object.
         internal CartPOM EnterCoupon(string coupon)
@@ -53,7 +53,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 
             // Wait for the coupon to be applied (if not already)
             Helper WaitForCoupon = new Helper(_driver);
-            WaitForCoupon.WaitForElement(3, By.ClassName("cart-discount"));
+            WaitForCoupon.WaitForElement(3, _CartDiscountLocator);
         }
 
         // Retrieves the Basket Total before the coupon is applied, and removes the £ symbol.

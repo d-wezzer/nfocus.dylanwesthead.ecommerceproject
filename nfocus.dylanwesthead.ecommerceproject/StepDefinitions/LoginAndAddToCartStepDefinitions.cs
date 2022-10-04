@@ -9,7 +9,6 @@
 using OpenQA.Selenium;
 using nfocus.dylanwesthead.ecommerceproject.POMPages;
 using nfocus.dylanwesthead.ecommerceproject.Utils;
-using OpenQA.Selenium.Support.UI;
 
 namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
 {
@@ -69,7 +68,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
         [When(@"I add '([^']*)' and '([^']*)' to my cart")]
         protected private void WhenIAddAndToMyCart(string product1, string product2)
         {
-            NavigationBar NavBar = new(_driver);
+            NavigationBarPOM NavBar = new(_driver);
             ShopPOM ShopPage = new(_driver);
 
             // Loop through the products passed in though feature files.

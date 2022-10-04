@@ -8,7 +8,6 @@
  */
 using OpenQA.Selenium;
 using NUnit.Framework;
-using OpenQA.Selenium.Support.UI;
 using nfocus.dylanwesthead.ecommerceproject.Utils;
 using nfocus.dylanwesthead.ecommerceproject.POMPages;
 
@@ -37,7 +36,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
         [When(@"I place the order")]
         protected private void WhenIPlaceTheOrder()
         {
-            NavigationBar Navbar = new(_driver);
+            NavigationBarPOM Navbar = new(_driver);
             Navbar.GoToCheckout();
 
             // Fills in the billing form with the customers details.
@@ -75,7 +74,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
             string NewOrderNumber = OrderDetailsPage.GetOrderNumber();
 
             // Navigate to the my account page.
-            NavigationBar NavBar = new(_driver);
+            NavigationBarPOM NavBar = new(_driver);
             NavBar.GoToMyAccount();
 
             // Go to the orders page to see all successfully placed orders.

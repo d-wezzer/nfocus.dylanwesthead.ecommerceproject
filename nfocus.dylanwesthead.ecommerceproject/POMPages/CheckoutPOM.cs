@@ -122,7 +122,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 
         /*
          * Wait for Order to be Received
-         *   - Waits for the entry text 'Order Received' to be displayed.
+         *   - Waits for the entry text 'Order received' to be displayed.
          *   - An explicit wait of 5 seconds has been allowed before timeout.
          */
         internal void WaitForOrderConfirmed()

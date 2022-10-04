@@ -19,9 +19,11 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         }
 
         // Locators for items in shop. The => means each time the variable is used, find element is called.
+        private readonly By _AddToCartLocator = By.ClassName("single_add_to_cart_button");
+        private readonly By _ViewCartLocator = By.LinkText("View cart");
+        private IWebElement AddToCartButton => _driver.FindElement(_AddToCartLocator);
+        private IWebElement ViewCartLink => _driver.FindElement(_ViewCartLocator);
         private IWebElement SearchBar => _driver.FindElement(By.Id("woocommerce-product-search-field-0"));
-        private IWebElement AddToCartButton => _driver.FindElement(By.ClassName("single_add_to_cart_button"));
-        private IWebElement ViewCartLink => _driver.FindElement(By.LinkText("View cart"));
 
         /*
          * Search for Product and Add to Cart
@@ -39,11 +41,11 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 
                 // Allow store contents one second to load.
                 Helper Myhelper = new(_driver);
-                Myhelper.WaitForElement(1, By.ClassName("single_add_to_cart_button"));
+                Myhelper.WaitForElement(1, _AddToCartLocator);
 
                 // Add item to cart and allow cart time to update
                 AddItemToCart();
-                Myhelper.WaitForElement(2, By.LinkText("View cart"));
+                Myhelper.WaitForElement(2, _ViewCartLocator);
             }
         }
 
