@@ -1,6 +1,6 @@
 ﻿/*
  * Author: Dylan Westhead
- * Last Edited: 29/09/2022
+ * Last Edited: 06/10/2022
  *
  *   - The Page Object Model for the login page of the Edgewords eCommerce demo site. 
  */
@@ -42,6 +42,17 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         internal void GoLogin()
         {
             LoginButton.Click();
+        }
+
+        // Dismisses the store notice if it is displayed.
+        internal void DismissNotice()
+        {
+            // If the Store Notice is displayed, dismiss it.
+            string DismissNotice = "woocommerce-store-notice__dismiss-link";
+            if (_driver.FindElement(By.ClassName(DismissNotice)).Displayed)
+            {
+                _driver.FindElement(By.ClassName(DismissNotice)).Click();
+            }
         }
 
         /*

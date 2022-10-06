@@ -1,6 +1,6 @@
 ﻿/*
  * Author: Dylan Westhead
- * Last Edited: 01/10/2022
+ * Last Edited: 06/10/2022
  *
  *   - The Page Object Model for the cart page of the Edgewords eCommerce demo site.
  */
@@ -53,7 +53,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 
             // Wait for the coupon to be applied (if not already)
             Helper WaitForCoupon = new Helper(_driver);
-            WaitForCoupon.WaitForElement(3, _CartDiscountLocator);
+            WaitForCoupon.WaitForElement(5, _CartDiscountLocator);
         }
 
         // Retrieves the Basket Total before the coupon is applied, and removes the £ symbol.
@@ -88,11 +88,6 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
             return GrandTotal;
         }
 
-        // Retrieves the entire totals table element.
-        internal IWebElement GetCartTotalsElement()
-        {
-            return AllCartTotals;
-        }
 
         /* This only works for one product, need to edit to make more robust to handle any product */
         // Changes the quantity of a product directly from cart
@@ -119,6 +114,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 
         }
 
+        // Takes a screenshot of the calculated totals. Only takea a screenshot if env variable set to true.
         internal void TakeScreenshotTotals()
         {
             Helper ssHelper = new(_driver);
@@ -126,7 +122,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
             if (Environment.GetEnvironmentVariable("STEPSCREENSHOT") == "true")
             {
                 // Takes a screenshot of the cart totals table and attaches to the Test Details (for verification purposes).
-                ssHelper.TakeScreenshotElement(GetCartTotalsElement(), "all_cart_totals");
+                ssHelper.TakeScreenshotElement(AllCartTotals, "all_cart_totals");
             }
         }
     }

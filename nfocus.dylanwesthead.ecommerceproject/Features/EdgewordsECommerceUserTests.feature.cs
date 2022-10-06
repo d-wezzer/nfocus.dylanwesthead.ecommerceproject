@@ -36,9 +36,9 @@ namespace nfocus.dylanwesthead.ecommerceproject.Features
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "edgeWords eCommerce User Tests", @"We want to test the following two end-to-end user scenarios:
-1. @OrderNumber
+1. Tag[OrderNumber]
    After successfully placing an order, the new order number should be present in the orders history page (containing all orders).
-2. @Coupon
+2. Tag[Coupon]
    As a user, when I apply a coupon on the cart screen, the correct percentage of the subtotal price should be deducted.", ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
@@ -111,13 +111,32 @@ this.ScenarioInitialize(scenarioInfo);
 #line 14
 this.FeatureBackground();
 #line hidden
+                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                            "firstName",
+                            "surname",
+                            "address",
+                            "town",
+                            "postcode",
+                            "phone",
+                            "email"});
+                table1.AddRow(new string[] {
+                            "Dylan",
+                            "Westhead",
+                            "123 Sunshine Rd",
+                            "St Helens",
+                            "WA9 9AW",
+                            "01234567890",
+                            "dylan.westhead@nfocus.co.uk"});
 #line 20
+ testRunner.Given("I am a customer with the following details", ((string)(null)), table1, "Given ");
+#line hidden
+#line 23
  testRunner.When("I add \'Hoodie with Logo\' and \'Cap\' to my cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 21
+#line 24
  testRunner.And("I place the order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 22
+#line 25
  testRunner.Then("the order number should appear on my orders page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -133,7 +152,7 @@ this.FeatureBackground();
                     "Coupon"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create purchase order with coupon", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 29
+#line 32
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -146,13 +165,13 @@ this.ScenarioInitialize(scenarioInfo);
 #line 14
 this.FeatureBackground();
 #line hidden
-#line 30
+#line 33
  testRunner.When("I add \'Hoodie with Logo\' and \'Cap\' to my cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 31
+#line 34
  testRunner.And("I apply the coupon \'edgewords\' to the cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 32
+#line 35
  testRunner.Then("\'15\'% of the subtotal is deducted", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

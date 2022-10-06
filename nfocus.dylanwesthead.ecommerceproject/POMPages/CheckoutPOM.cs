@@ -1,11 +1,13 @@
 ﻿/*
  * Author: Dylan Westhead
- * Last Edited: 01/10/2022
+ * Last Edited: 06/10/2022
  *
  *   - The Page Object Model for the checkout page of the Edgewords eCommerce demo site. 
  */
+using nfocus.dylanwesthead.ecommerceproject.Utils;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using TechTalk.SpecFlow;
 
 namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 {
@@ -78,16 +80,17 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
             EmailField.SendKeys(email);
         }
 
+
         // Uses all the above methods to populate the billing form with the correct information.
-        internal void PopulateBillingInfo(string first, string surname, string address, string city, string postcode, string phone, string email)
+        internal void PopulateBillingInfo(Customer customer)
         {
-            SetFirstNameField(first);
-            SetSurnameField(surname);
-            SetHomeAddressField(address);
-            SetCityField(city);
-            SetPostcodeField(postcode);
-            SetPhoneField(phone);
-            SetEmailField(email);
+            SetFirstNameField(customer.First);
+            SetSurnameField(customer.Surname);
+            SetHomeAddressField(customer.Address);
+            SetCityField(customer.Town);
+            SetPostcodeField(customer.Postcode);
+            SetPhoneField(customer.Phone);
+            SetEmailField(customer.Email);
         }
 
         // Clicks the pay by dheque radio button.
@@ -131,6 +134,48 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
             WebDriverWait WaitForOrderConfirmation = new(_driver, TimeSpan.FromSeconds(5));
             WaitForOrderConfirmation.Until(drv => drv.FindElement(By.ClassName("entry-title")).Text.Contains("Order received"));
 
+        }
+
+        /*
+         * Create the Customer Object
+         *   - Creates a customer instance with the details passed from feature file.
+         *   - Returns the customer object with the given details.
+         */
+        public Customer SetCustomerDetails(Table customerDetails)
+        {
+            Dictionary<string, string> customer = ToDictionary(customerDetails);
+
+            string first = customer["firstName"];
+            string surname = customer["surname"];
+            string address = customer["address"];
+            string town = customer["town"];
+            string postcode = customer["postcode"];
+            string phone = customer["phone"];
+            string email = customer["email"];
+
+            return new Customer(first, surname, address, town, postcode, phone, email);
+            }
+
+        /*
+         * Convert Table to Dictionary
+         *   - Takes in a table and maps it out to a dictionary.
+         *   - Used to assign meaningful keys to the relevant data.
+         */
+        internal Dictionary<string, string> ToDictionary(Table table)
+        {
+            // Retrieves the keys and values from the data table in the feature file.
+            Dictionary<string, string> customer = new();
+            var x = table.Rows[0];
+            var keys = x.Keys.ToArray();
+            var values = x.Values.ToArray();
+
+            // Loops through the columns of the row and maps them to dictionary accordingly. 
+            for (int i = 0; i < x.Values.Count; i++)
+            {
+                customer.Add(keys[i], values[i]);
+            }
+
+            return customer;
         }
     }
 }

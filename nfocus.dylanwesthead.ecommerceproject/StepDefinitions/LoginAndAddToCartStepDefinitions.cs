@@ -1,6 +1,6 @@
 ﻿/*
  * Author: Dylan Westhead
- * Last Edited: 01/10/2022
+ * Last Edited: 06/10/2022
  *
  *   - The step definitions used by both the order number verification and coupon scenarios.
  *   - Contains all the required information and logic to automate the steps through 
@@ -35,13 +35,6 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
         protected private void GivenIAmOnTheEdgewordsECommerceWebsite()
         {
             _driver.Url = _baseUrl + "/my-account/";
-
-            // If the Store Notice is displayed, dismiss it.
-            string DismissNotice = "woocommerce-store-notice__dismiss-link";
-            if (_driver.FindElement(By.ClassName(DismissNotice)).Displayed)
-            {
-                _driver.FindElement(By.ClassName(DismissNotice)).Click();
-            }
         }
 
 
@@ -57,6 +50,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
             string Password = Environment.GetEnvironmentVariable("password");
 
             LoginPOM LoginPage = new(_driver);
+            LoginPage.DismissNotice();
             LoginPage.LoginWithValidCredentials(Email, Password);
         }
 

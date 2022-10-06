@@ -24,7 +24,6 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
     {
         private IWebDriver _driver;
         private readonly string _baseUrl = "https://www.edgewordstraining.co.uk/demo-site/";
-        private readonly Customer _customer = new Customer("Dylan", "Westhead", "123 Sunshine Road", "St Helens", "WA9 9AW", "01234567890", "dylan.westhead@nfocus.co.uk");
         private readonly ScenarioContext _scenarioContext;
         private readonly ISpecFlowOutputHelper _specflowOutputHelper;
 
@@ -70,7 +69,6 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
 
             _scenarioContext["driver"] = _driver;
             _scenarioContext["baseUrl"] = _baseUrl;
-            _scenarioContext["customer"] = _customer;
         }
 
 

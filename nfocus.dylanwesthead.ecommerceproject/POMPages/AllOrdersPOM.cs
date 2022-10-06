@@ -1,6 +1,6 @@
 ﻿/*
  * Author: Dylan Westhead
- * Last Edited: 01/10/2022
+ * Last Edited: 06/10/2022
  *
  *   - The Page Object Model for the order history page of the Edgewords eCommerce demo site. 
  */
@@ -32,12 +32,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
             return OrderNumbers.Text.Replace("#", "");
         }
 
-        // Retrieves the entire row of order numbers on the first page of the order history.
-        internal IWebElement GetAllOrderNumbersTable()
-        {
-            return AllOrderNumbersTable;
-        }
-
+        // Takes a screenshot of the table containing all orders
         internal void ScreenshotAllOrders()
         {
             Helper ElementScreenshot = new(_driver);
