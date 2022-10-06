@@ -2,7 +2,7 @@
  * Author: Dylan Westhead
  * Last Edited: 06/10/2022
  *
- *   - The step definitions used by the order verification scenario.
+ *   - Step definitions used by the order verification scenario.
  *   - Contains all the required information and logic to automate the steps through 
  *     integration of the POMPages. 
  */
@@ -10,7 +10,6 @@ using OpenQA.Selenium;
 using NUnit.Framework;
 using nfocus.dylanwesthead.ecommerceproject.Utils;
 using nfocus.dylanwesthead.ecommerceproject.POMPages;
-using FluentAssertions;
 
 namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
 {
@@ -26,8 +25,13 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
             this._driver = (IWebDriver)_scenarioContext["driver"];
         }
 
+
+        /*
+         * [Given] "I am a customer with the following details"
+         *   - Creates a customer instance with provided details.
+         */
         [Given(@"I am a customer with the following details")]
-        public void GivenIAmACustomerWithTheFollowingDetails(Table customerDetails)
+        protected private void GivenIAmACustomerWithTheFollowingDetails(Table customerDetails)
         {
             // Creates a customer object and updates the global variable for use in the next step.
             CheckoutPOM checkoutPage = new(_driver);
@@ -42,30 +46,33 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
          * [When] "I place the order"
          *    - Enters all the revelant billing info and finalises the order.
          */
-
         [When(@"I place the order")]
         protected private void WhenIPlaceTheOrder()
         {
-            NavigationBarPOM Navbar = new(_driver);
-            Navbar.GoToCheckout();
+            // POMPages used in this step (in order).
+            NavigationBarPOM navbar = new(_driver);
+            CheckoutPOM checkoutPage = new(_driver);
 
-            // Fills in the billing form with the customers details.
-            CheckoutPOM CheckoutPage = new(_driver);
-            CheckoutPage.PopulateBillingInfo((Customer)_scenarioContext["customer"]);
+            // Navigate to checkout page.
+            navbar.GoToCheckout();
 
-            // Click the radio button to pay by cheque (NOT cash).
-            try // Cheque radio button is extremely fragile to stale elements.
+            // Fills in billing form with customer details.
+            checkoutPage.PopulateBillingInfo((Customer)_scenarioContext["customer"]);
+
+            // Click radio button to pay by cheque. 
+            try 
             {
-                CheckoutPage.SelectPayByCheque();
+                checkoutPage.SelectPayByCheque();
             }
             catch
             {
-                CheckoutPage.SelectPayByCheque();
+                // Cheque button fragile to stale elements, so retry if failed first time.
+                checkoutPage.SelectPayByCheque();
             }
 
-            // Place the order and wait for confirmation.
-            CheckoutPage.PlaceOrder();
-            CheckoutPage.WaitForOrderConfirmed();
+            // Place order and wait for confirmation.
+            checkoutPage.PlaceOrder();
+            checkoutPage.WaitForOrderConfirmed();
         }
 
 
@@ -74,28 +81,29 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
          *    - Verifies that the newly generated order number (from: When I place the order) is present on the page 
          *      containing all orders. 
          */
-
         [Then(@"the order number should appear on my orders page")]
         protected private void ThenTheOrderNumberShouldAppearOnMyOrdersPage()
         {
-            // Retrieves the unique order number.
-            OrderDetailsPOM OrderDetailsPage = new(_driver);
-            string NewOrderNumber = OrderDetailsPage.GetOrderNumber();
+            // POM Pages used in this step (in order).
+            OrderDetailsPOM orderDetailsPage = new(_driver);
+            NavigationBarPOM navBar = new(_driver);
+            MyAccountPOM myAccountPage = new(_driver);
+            AllOrdersPOM allOrdersPage = new(_driver);
 
-            // Navigate to the my account page.
-            NavigationBarPOM NavBar = new(_driver);
-            NavBar.GoToMyAccount();
+            // Captures the new order number
+            string newOrderNumber = orderDetailsPage.GetOrderNumber();
 
-            // Go to the orders page to see all successfully placed orders.
-            MyAccountPOM MyAccountPage = new(_driver);
-            MyAccountPage.GoToOrders();
+            // Navigates to my account page.
+            navBar.GoToMyAccount();
 
-            // Collect the top most order number, this should be the most recent order.
-            AllOrdersPOM AllOrdersPage = new(_driver);
-            string TopOrderNumber = AllOrdersPage.GetTopOrderNumber();
+            // Navigates to order history page..
+            myAccountPage.GoToOrders();
 
-            Console.WriteLine($"\nYour new order number: {NewOrderNumber}\nOrders table contains: {TopOrderNumber}\n");
-            Assert.That(TopOrderNumber, Does.Contain(NewOrderNumber), $"The order with order number {NewOrderNumber} was not found on your orders page");
+            // Captures the top order number (most recent) from the order history.
+            string topOrderNumber = allOrdersPage.GetTopOrderNumber();
+
+            Console.WriteLine($"\nYour new order number: {newOrderNumber}\nOrders table contains: {topOrderNumber}\n");
+            Assert.That(topOrderNumber, Does.Contain(newOrderNumber), $"The order with order number {newOrderNumber} was not found on your orders page");
 
         }
     }

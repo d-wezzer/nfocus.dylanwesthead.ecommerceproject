@@ -1,8 +1,8 @@
 ﻿/*
  * Author: Dylan Westhead
- * Last Edited: 29/09/2022
+ * Last Edited: 06/10/2022
  *
- *   - The object model for the navigation bar. Saves repeating the same code in each of the POMPages.
+ *   - The Object Model for the navigation bar. Saves repeating the same code in each of the POMPages.
  */
 using nfocus.dylanwesthead.ecommerceproject.Utils;
 using OpenQA.Selenium;
@@ -24,46 +24,68 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
             _driver = driver;
         }
 
-        // Locators used for all the elements needed from the navigation bar.
-        private readonly By _MyAccountLocator = By.LinkText("My account");
-        private IWebElement HomeLink => _driver.FindElement(By.LinkText("Home"));
-        private IWebElement ShopLink => _driver.FindElement(By.LinkText("Shop"));
-        private IWebElement CartLink => _driver.FindElement(By.LinkText("Cart"));
-        private IWebElement CheckoutLink => _driver.FindElement(By.LinkText("Checkout"));
-        private IWebElement MyAccountLink => _driver.FindElement(_MyAccountLocator);
+        /* Locators and elements needed for the navigation bar links. */
+        // The => means each time the variable is used, find element is called.
+        private readonly By _myAccountLocator = By.LinkText("My account");
+        private IWebElement _homeLink => _driver.FindElement(By.LinkText("Home"));
+        private IWebElement _shopLink => _driver.FindElement(By.LinkText("Shop"));
+        private IWebElement _cartLink => _driver.FindElement(By.LinkText("Cart"));
+        private IWebElement _checkoutLink => _driver.FindElement(By.LinkText("Checkout"));
+        private IWebElement _myAccountLink => _driver.FindElement(_myAccountLocator);
 
-        // Navigates to the Edgewords eCommerce homepage.
+
+        /*
+         * GoToHome()
+         *   - Navigates to the Edgewords eCommerce homepage.
+         */
         internal void GoToHome()
         {
-            HomeLink.Click();
+            _homeLink.Click();
         }
 
-        // Navigates to the Edgewords eCommerce shop.
+
+        /*
+         * GoToShop()
+         *   - Navigates to the Edgewords eCommerce shop.
+         */
         internal void GoToShop()
         {
-            ShopLink.Click();
+            _shopLink.Click();
         }
 
-        // Navigates to the Edgewords eCommerce cart page.
+
+        /*
+         * GoToCart()
+         *   - Navigates to a customers cart on the Edgewords eCommerce site.
+         */
         internal void GoToCart()
         {
-            CartLink.Click();
+            _cartLink.Click();
         }
 
-        // Navigates to the Edgewords eCommerce checkout page.
+
+        /*
+         * GoToCheckout()
+         *   - Navigates to the Edgewords eCommerce checkout page.
+         */
         internal void GoToCheckout()
         {
-            CheckoutLink.Click();
+            _checkoutLink.Click();
         }
 
-        // Navigates to the Edgewords eCommerce my account page.
+
+        /*
+         * GoToMyAccount()
+         *   - Navigates to a customers profile/account page on the Edgewords eCommerce site.
+         *   - Explicit wait of 2 seconds for the my account link to be displayed, before timing out.
+         */
         internal void GoToMyAccount()
         {
-            // Wait for my account link to be displayed on navigation menu.
-            Helper WaitForMyAccount = new(_driver);
-            WaitForMyAccount.WaitForElement(2, _MyAccountLocator);
+            // Wait for link to be displayed on navigation menu.
+            Helper waitForMyAccount = new(_driver);
+            waitForMyAccount.WaitForElement(2, _myAccountLocator);
 
-            MyAccountLink.Click();
+            _myAccountLink.Click();
         }
     }
 }

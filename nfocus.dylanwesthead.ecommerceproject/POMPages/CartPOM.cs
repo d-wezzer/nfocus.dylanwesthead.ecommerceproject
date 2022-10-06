@@ -19,93 +19,181 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
             this._driver = driver;
         }
 
-        // Locators to the required elements on the cart page. The => means each time the variable is used, find element is called.
-        private readonly By _CartDiscountLocator = By.ClassName("cart-discount");
-        private IWebElement CouponCodeField => _driver.FindElement(By.Id("coupon_code"));
-        private IWebElement ApplyCouponButton => _driver.FindElement(By.Name("apply_coupon"));
-        private IWebElement SubtotalField => _driver.FindElement(By.CssSelector(".cart-subtotal > td > .amount"));
-        private IWebElement CouponSavingsField => _driver.FindElement(By.CssSelector(".coupon-edgewords > td > .amount"));
-        private IWebElement ShippingCostField => _driver.FindElement(By.CssSelector("label bdi"));
-        private IWebElement GrandTotalField => _driver.FindElement(By.CssSelector("strong > .amount"));
-        private IWebElement AllCartTotals => _driver.FindElement(By.ClassName("cart_totals"));
-        private IWebElement FirstQuantityField => _driver.FindElement(By.ClassName("input-text"));
-        private IWebElement UpdateCartButton => _driver.FindElement(By.Name("update_cart"));
+        /* Locators and elements used to calculate and gather the cart totals on the cart page. */
+        // The => means each time the variable is used, find element is called.
+        private readonly By _cartDiscountLocator = By.ClassName("cart-discount");
+        private IWebElement _couponCodeField => _driver.FindElement(By.Id("coupon_code"));
+        private IWebElement _applyCouponButton => _driver.FindElement(By.Name("apply_coupon"));
+        private IWebElement _subtotalField => _driver.FindElement(By.CssSelector(".cart-subtotal > td > .amount"));
+        private IWebElement _couponSavingsField => _driver.FindElement(By.CssSelector(".coupon-edgewords > td > .amount"));
+        private IWebElement _shippingCostField => _driver.FindElement(By.CssSelector("label bdi"));
+        private IWebElement _grandTotalField => _driver.FindElement(By.CssSelector("strong > .amount"));
+        private IWebElement _allCartTotals => _driver.FindElement(By.ClassName("cart_totals"));
+        private IWebElement _firstQuantityField => _driver.FindElement(By.ClassName("input-text"));
+        private IWebElement _updateCartButton => _driver.FindElement(By.Name("update_cart"));
 
-        // Enters a coupon code into the coupon field. Returns a CartPOM object.
-        internal CartPOM EnterCoupon(string coupon)
+
+        /*
+         * EnterCoupon(string)
+         *   - Enters a coupon code into the coupon field. 
+         *   - Try/catch in place to retry the same action twice.
+         */
+        internal void EnterCoupon(string coupon)
         {   // Try catch again to help prevent stale element exceptions
             try
             {
-                CouponCodeField.SendKeys(coupon);
+                _couponCodeField.SendKeys(coupon);
             }
             catch
             {
-                CouponCodeField.SendKeys(coupon);
+                _couponCodeField.SendKeys(coupon);
             }
-
-            return this;
         }
 
-        // Clicks the apply coupon button and waits for it to be applied.
+
+        /*
+         * ApplyCoupon()
+         *   - Clicks apply coupon button and waits for it to be applied.
+         *   - Uses an explicit wait to wait 5 seconds for cart discount field to be displayed.
+         */
         internal void ApplyCoupon()
         {
-            ApplyCouponButton.Click();
+            _applyCouponButton.Click();
 
-            // Wait for the coupon to be applied (if not already)
-            Helper WaitForCoupon = new Helper(_driver);
-            WaitForCoupon.WaitForElement(5, _CartDiscountLocator);
+            // Wait for the coupon to be applied (if not already) by searching for a cart discount field
+            Helper waitForCoupon = new Helper(_driver);
+            waitForCoupon.WaitForElement(5, _cartDiscountLocator);
         }
 
-        // Retrieves the Basket Total before the coupon is applied, and removes the £ symbol.
+
+        /*
+         * GetSubtotalBeforeCoupon()
+         *   - Retrieves the subtotal of order before coupon is applied.
+         *   - Subtotal is captured directly from the webpage.
+         *   - Removes £ symbol and parses to decimal for reliable currency calculations.
+         */
         internal decimal GetSubtotalBeforeCoupon()
         {
-            string BasketTotalString = SubtotalField.Text.Replace("£", "");
-            decimal BasketTotal = decimal.Parse(BasketTotalString);
-            return BasketTotal;
+            string subtotalString = _subtotalField.Text.Replace("£", "");
+            decimal subtotal = decimal.Parse(subtotalString);
+            return subtotal;
         }
 
-        // Retrieves the total coupon savings and removes the £ symbol.
+
+        /*
+         * GetCouponSavings()
+         *   - Retrieves the total coupon savings of the order.
+         *   - Coupon savings figure is captured directly from the webpage.
+         *   - Removes £ symbol and parses to decimal for reliable currency calulcations.
+         */
         internal decimal GetCouponSavings()
         {
-            string CouponSavingsString = CouponSavingsField.Text.Replace("£", "");
-            decimal CouponSavings = decimal.Parse(CouponSavingsString);
-            return CouponSavings;
+            string couponSavingsString = _couponSavingsField.Text.Replace("£", "");
+            decimal couponSavings = decimal.Parse(couponSavingsString);
+            return couponSavings;
         }
 
-        // Retrieve the shipping cost and convert to a decimal.
+
+        /*
+         * GetShippingCost()
+         *   - Retrieves the shipping cost of the order.
+         *   - Shipping cost is captured directly from the webpage.
+         *   - Removes £ symbol and parses to decimal for reliable currency calculations.
+         */
         internal decimal GetShippingCost()
         {
-            string ShippingCostString = ShippingCostField.Text.Replace("£", "");
-            decimal ShippingCost = decimal.Parse(ShippingCostString);
-            return ShippingCost;
+            string shippingCostString = _shippingCostField.Text.Replace("£", "");
+            decimal shippingCost = decimal.Parse(shippingCostString);
+            return shippingCost;
         }
 
-        // Retrieves actual grand total displayed on webpage, then converts to decimal.
+
+        /*
+         * GetGrandTotal()
+         *   - Retrieves actual grand total of the order.
+         *   - Grand total is captured directly from the webpage.
+         *   - Removes £ symbol and parses to decimal for reliable currency calculations.
+         */
         internal decimal GetGrandTotal()
         {
-            string GrandTotalString = GrandTotalField.Text.Replace("£", "");
-            decimal GrandTotal = decimal.Parse(GrandTotalString);
-            return GrandTotal;
+            string grandTotalString = _grandTotalField.Text.Replace("£", "");
+            decimal grandTotal = decimal.Parse(grandTotalString);
+            return grandTotal;
         }
 
 
-        /* This only works for one product, need to edit to make more robust to handle any product */
-        // Changes the quantity of a product directly from cart
+        /*
+         * ChangeProductQuantity(string)
+         *   - Changes the quantity field of the first item in the cart to the specified quantity.
+         */
         internal void ChangeProductQuantity(string quantity)
         {
-            FirstQuantityField.Clear();
-            FirstQuantityField.SendKeys(quantity);
+            _firstQuantityField.Clear();
+            _firstQuantityField.SendKeys(quantity);
         }
 
-        // Clicks the button to update the cart
+
+        /*
+         * CalculateExpectedAndActualTotals()
+         *   - Calculates all the expected totals whilst also capturing webpage displayed totals.
+         *   - Maps all the totals to a dictionary for use in the step definitions.
+         */
+        internal Dictionary<string, decimal> CalculateExpectedAndActualTotals(int savingsPercentage)
+        {
+            // Captures subtotal before coupon is applied, and adds to totals dictionary.
+            Decimal subtotalBeforeCoupon = GetSubtotalBeforeCoupon();
+
+            // Calculates expected coupon savings - what it should be.
+            Decimal expectedSavings = subtotalBeforeCoupon / 100 * savingsPercentage;
+
+            // Captures the actual savings directly from the webpage - what it is.
+            Decimal actualSavings = GetCouponSavings();
+
+            // Calculates expected total after applying savings but before applying shipping costs.
+            // E.g. 85% of the total implies a 15% discount. Subtotal / 100 = 1% | 1% * (100 - 15) = 85%
+            Decimal expectedTotalBeforeShipping = subtotalBeforeCoupon / 100 * (100 - savingsPercentage);
+
+            // Calculates actual total before shipping using totals captured directly from webpage.
+            Decimal actualTotalBeforeShipping = subtotalBeforeCoupon - actualSavings;
+
+            // Captures the shipping cost directly from the webpage.
+            Decimal shippingCost = GetShippingCost();
+
+            // Calculates expected grand total by adding shipping cost to discounted total.
+            Decimal expectedGrandTotal = expectedTotalBeforeShipping + shippingCost;
+
+            // Captures actual grand total directly from webpage.
+            Decimal actualGrandTotal = GetGrandTotal();
+
+            // Initialise a dictionary containing all the cart totals with reasonably named keys (identifiers).
+            Dictionary<string, decimal> cartTotals = new Dictionary<string, decimal>()
+            {
+                { nameof(subtotalBeforeCoupon), subtotalBeforeCoupon },
+                { nameof(expectedSavings), expectedSavings },
+                { nameof(actualSavings), actualSavings },
+                { nameof(expectedTotalBeforeShipping), expectedTotalBeforeShipping },
+                { nameof(actualTotalBeforeShipping), actualTotalBeforeShipping },
+                { nameof(shippingCost), shippingCost },
+                { nameof(expectedGrandTotal), expectedGrandTotal },
+                { nameof(actualGrandTotal), actualGrandTotal }
+            };
+            return cartTotals;
+        }
+
+
+        /*
+         * UpdateCart()
+         *   - Updates the cart by clicking the update button.
+         *   - Explicit wait of 3 seconds to allow button to be enabled after applying coupon.
+         */
         internal void UpdateCart()
         {
             try
             {
                 // Waits 3 seconds for the update button to be enabled
-                WebDriverWait WaitForUpdateButtonClickable = new WebDriverWait(_driver, TimeSpan.FromSeconds(3));
-                WaitForUpdateButtonClickable.Until(drv => UpdateCartButton.Enabled);
-                UpdateCartButton.Click();
+                WebDriverWait waitForUpdateButtonClickable = new WebDriverWait(_driver, TimeSpan.FromSeconds(3));
+                waitForUpdateButtonClickable.Until(drv => _updateCartButton.Enabled);
+                _updateCartButton.Click();
             }
             catch
             {
@@ -114,16 +202,17 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 
         }
 
-        // Takes a screenshot of the calculated totals. Only takea a screenshot if env variable set to true.
-        internal void TakeScreenshotTotals()
-        {
-            Helper ssHelper = new(_driver);
 
-            if (Environment.GetEnvironmentVariable("STEPSCREENSHOT") == "true")
-            {
-                // Takes a screenshot of the cart totals table and attaches to the Test Details (for verification purposes).
-                ssHelper.TakeScreenshotElement(AllCartTotals, "all_cart_totals");
-            }
+        /*
+         * ScreenshotAllTotals()
+         *   - Takes screenshot of the calculated cart totals for the order.
+         *   - Attaches to the test context for verification purposes.
+         */
+        internal void ScreenshotAllTotals()
+        {
+            // Takes screenshot of the cart totals table.
+            Helper ssHelper = new(_driver);
+            ssHelper.TakeScreenshotElement(_allCartTotals, "all_cart_totals");
         }
     }
 }

@@ -1,10 +1,10 @@
 ﻿/*
  * Author: Dylan Westhead
- * Last Edited: 01/10/2022
+ * Last Edited: 06/10/2022
  *
- *   - The hooks class is a cucumber class used to perform tasks at given points in the test process.
- *   - Contains methods to setup the environment, clean up the environment when finished, and scrrenshot after each test step.
- *   - Also shares data to different scenarios and step definitions.
+ *   - Hooks class used to share data and perform tasks at given points in the test process.
+ *   - Contains methods to setup the environment, clean up the environment when finished, and screenshot after each test step.
+ *   - Shares data between scenarios through the use of scenario context.
  */
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -14,8 +14,8 @@ using OpenQA.Selenium.Firefox;
 using System.Globalization;
 using TechTalk.SpecFlow.Infrastructure;
 
-[assembly: Parallelizable(ParallelScope.Fixtures)] // Can only parallelise Features.
-[assembly: LevelOfParallelism(2)] // Worker thread i.e. max amount of Features to run in Parallel.
+[assembly: Parallelizable(ParallelScope.Fixtures)] // States features can be run in paralell.
+[assembly: LevelOfParallelism(2)] // Worker thread i.e. set max amount of Features to run in parallel.
 
 namespace nfocus.dylanwesthead.ecommerceproject.Utils
 {
@@ -28,9 +28,9 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
         private readonly ISpecFlowOutputHelper _specflowOutputHelper;
 
         /*
-         * Hooks Constructor
-         *   - The Hooks() constructor is used for context injection.
-         *   - We use it to share base data.
+         * Hooks(ScenarioContext, ISpecFlowOutputHelper)
+         *   - Allows context injection through scenario context - used to share base data between scenarios.
+         *   - Capable of running extra automation logic at given stages of the test process.
          */
         protected private Hooks(ScenarioContext scenarioContext, ISpecFlowOutputHelper outputHelper)
         {
@@ -40,16 +40,17 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
 
 
         /*
-         * Setup Before
-         *   - This is run once before the features are run. It retrieves the browser and sets up the respective driver agent.
-         *   - Passes basic info via contect injection like the driver, baseUrl, and customer object.
+         * Setup()
+         *   - Runs once before the features are run.
+         *   - Retrieves the browser from env variavke and sets up respective driver agent.
+         *   - Passes base info via context injection.
          */
         [Before]
         protected private void Setup()
         {
             // Allows customisation of the browser to be used.
-            string Browser = Environment.GetEnvironmentVariable("BROWSER");
-            switch (Browser)
+            string browser = Environment.GetEnvironmentVariable("BROWSER");
+            switch (browser)
             {
                 case "firefox":
                     _driver = new FirefoxDriver();
@@ -67,15 +68,17 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
             }
             _driver.Manage().Window.Maximize();
 
+            // Store the driver and baseUrl objects in the scenario context.
             _scenarioContext["driver"] = _driver;
             _scenarioContext["baseUrl"] = _baseUrl;
         }
 
 
         /*
-         * Take Screenshot of Page after every step
-         *   - This function runs after every step, and when enabled takes screenshots of the entire page after every step is performed from the feature file.
-         *   - Screenshot functioanlity can be set in the Environment configuration file (.runsettings).
+         * TakeScreenshotAfterStep()
+         *   - Runs after every step.
+         *   - Takes screenshots of the entire page after every step is performed if enabled.
+         *   - Screenshot functioanlity can be set via setting the STEPSCRRENSHOT env variable to true.
          *   - Screenshots are unique with date and time stamps, and then added to the Living Doc html report.
          */
         [AfterStep]
@@ -91,21 +94,21 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
                     string scenario = _scenarioContext.ScenarioInfo.Title.ToLower();
                     scenario = info.ToTitleCase(scenario).Replace(" ", string.Empty);
 
-                    // Get the current date and time in format YYYY-mm-dd_DD-hh-ss, and add that to file name.
+                    // Get the current working directory, date and time in format YYYY-mm-dd_DD-hh-ss, and add to file name.
                     DateTime now = DateTime.Now;
-                    string FileName = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\TestScreenshots\StepScreenshots\" + scenario + $"{now:yyyy-MM-dd_HH_mm_ss}" + ".png"));
+                    string fileName = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\TestScreenshots\StepScreenshots\" + scenario + $"{now:yyyy-MM-dd_HH_mm_ss}" + ".png"));
 
                     // Saves the screenshot to the correct path, and adds it to the Living Doc report.
-                    ScreenshotCapture.GetScreenshot().SaveAsFile(FileName);
-                    _specflowOutputHelper.AddAttachment(FileName);
+                    ScreenshotCapture.GetScreenshot().SaveAsFile(fileName);
+                    _specflowOutputHelper.AddAttachment(fileName);
                 }
             }
         }
 
 
         /*
-         * Teardown After
-         *   - The Teardown() function runs at the very end, when all tests have finished running.
+         * Teardown()
+         *   - Runs once at the very end, when all tests have finished running.
          *   - Handles quiting any active drivers.
          */
         [After]

@@ -1,6 +1,6 @@
 ﻿/*
  * Author: Dylan Westhead
- * Last Edited: 29/09/2022
+ * Last Edited: 06/10/2022
  *
  *   - The Page Object Model for the my account page of the Edgewords eCommerce demo site. 
  */
@@ -17,25 +17,35 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
             this._driver = driver;
         }
 
-        // Locators for the orders page and logout link. The => means each time the variable is used, find element is called.
-        private readonly By _OrdersLinkLocator = By.LinkText("Orders");
-        private IWebElement OrdersLink => _driver.FindElement(_OrdersLinkLocator);
-        private IWebElement LogOutLink => _driver.FindElement(By.LinkText("Logout"));
+        /* Locators and elements needed to view order history from the my account page. */
+        // The => means each time the variable is used, find element is called.
+        private readonly By _ordersLinkLocator = By.LinkText("Orders");
+        private IWebElement _ordersLink => _driver.FindElement(_ordersLinkLocator);
+        private IWebElement _logOutLink => _driver.FindElement(By.LinkText("Logout"));
 
-        // Navigates to the orders page link from the my account page.
+
+        /*
+         * GoToOrders()
+         *   - Clicks and navigates to a customers order history page.
+         *   - Explicit wait of 2 seconds to wait for orders link to be displayed, before timing out.
+         */
         internal void GoToOrders()
         {
             // Wait for the orders link to be displayed in the side menu.
-            Helper WaitForOrders = new(_driver);
-            WaitForOrders.WaitForElement(2, _OrdersLinkLocator);
+            Helper waitForOrders = new(_driver);
+            waitForOrders.WaitForElement(2, _ordersLinkLocator);
 
-            OrdersLink.Click();
+            _ordersLink.Click();
         }
 
-        // Logs out from the my account page.
+
+        /*
+         * LogOutOfAccount()
+         *   - Logs out of an account.
+         */
         internal void LogOutOfAccount()
         {
-            LogOutLink.Click();
+            _logOutLink.Click();
         }
     }
 }

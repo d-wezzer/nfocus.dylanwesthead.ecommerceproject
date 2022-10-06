@@ -18,26 +18,37 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
             this._driver = driver;
         }
 
-        // Locators used to gather the most recent order number from the order history page.
-        private IWebElement OrderNumbers => _driver.FindElement(By.ClassName("woocommerce-orders-table__cell-order-number"));
-        private IWebElement AllOrderNumbersTable => _driver.FindElement(By.ClassName("woocommerce-MyAccount-orders"));
+        /* Locators and elements used to gather the most recent order number from the order history page. */
+        // The => means each time the variable is used, find element is called.
+        private IWebElement _orderNumbers => _driver.FindElement(By.ClassName("woocommerce-orders-table__cell-order-number"));
+        private IWebElement _allOrderNumbersTable => _driver.FindElement(By.ClassName("woocommerce-MyAccount-orders"));
 
-        // Retrieves the top most recent order number.
+
+        /*
+         * GetTopOrderNumber()
+         *   - Retrieves the top (most recent) order number.
+         *   - Takes a screenshot of all order numbers if enabled.
+         */
         internal string GetTopOrderNumber()
         {
             // Screenshot the entire orders table.
             ScreenshotAllOrders();
 
             // Remove the # symbol for a pure digit string.
-            return OrderNumbers.Text.Replace("#", "");
+            return _orderNumbers.Text.Replace("#", "");
         }
 
-        // Takes a screenshot of the table containing all orders
+
+        /*
+         * ScreenshotAllOrders()
+         *   - Takes a screenshot of the table containing all orders.
+         *   - Attaches to the test context for verification purposes.
+         */
         internal void ScreenshotAllOrders()
         {
-            Helper ElementScreenshot = new(_driver);
-            // Takes a screenshot of the entire orders table in my account and attaches to the Test Details (for verification purposes).
-            ElementScreenshot.TakeScreenshotElement(AllOrderNumbersTable, "top_order_from_all_orders");
+            Helper elementScreenshot = new(_driver);
+            // Takes screenshot of the entire orders table in my account.
+            elementScreenshot.TakeScreenshotElement(_allOrderNumbersTable, "top_order_from_all_orders");
         }
     }
 }

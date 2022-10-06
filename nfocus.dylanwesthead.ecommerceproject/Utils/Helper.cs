@@ -1,8 +1,8 @@
 ﻿/*
  * Author: Dylan Westhead
- * Last Edited: 29/09/2022
+ * Last Edited: 06/10/2022
  *
- *   - Contains helper functions that are used throughout the program frequently; helps prevent code duplication.
+ *   - Helper class with frequently used functions. Helps prevent code duplication throughout program.
  */
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -21,37 +21,39 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
 
 
         /*
-         * Wait for an Element to be Displayed
-         *   - The WaitForElement() function waits for a given amount of time for an element to be displayed.
+         * WaitForElement(int, By)
+         *   - Waits a given amount of time for an element to be displayed, before timing out.
          *   - If timeout occurs, an exception is thrown. Helps to prevent stale element exceptions.
          */
         internal void WaitForElement(int seconds, By locator)
         {
-            WebDriverWait WaitForElemDisplay = new WebDriverWait(_driver, TimeSpan.FromSeconds(seconds));
-            //WaitForElemDisplay.Until(drv => drv.FindElement(locator).Displayed);
-            WaitForElemDisplay.Until(drv => drv.FindElement(locator).Displayed);
+            WebDriverWait waitForElemDisplay = new WebDriverWait(_driver, TimeSpan.FromSeconds(seconds));
+            waitForElemDisplay.Until(drv => drv.FindElement(locator).Displayed);
         }
 
 
         /*
-         * Take Screenshot of an Element
-         *   - The TakeScreenshotElement() function takes a screenshot of given element, and customises the file name.
-         *   - The file name is respective to the element, timestamped to the current date and time, and stored in the TestSceenshots directory.
+         * TakeScreenshotElement(IWebElement, string)
+         *   - Takes screenshot of a given element, and customises the file name.
+         *   - File name is respective to the element, timestamped to the current date and time.
+         *   - Image is stored in the /TestSceenshots directory.
+         *   - Only functions if the STEPSCREENSHOT env variable is set to true.
          */
         internal void TakeScreenshotElement(IWebElement elem, string element)
         {
             if (Environment.GetEnvironmentVariable("STEPSCREENSHOT") == "true")
             {
-                ITakesScreenshot SSelem = elem as ITakesScreenshot;
-                Screenshot Screenshot = SSelem.GetScreenshot();
+                // Passes in element and screenshots that element.
+                ITakesScreenshot ssElem = elem as ITakesScreenshot;
+                Screenshot screenshot = ssElem.GetScreenshot();
 
-                // Find the current date and time, and reformats to a file friendly format.
-                DateTime Now = DateTime.Now;
-                string FileName = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\TestScreenshots\" + element + "_" + $"{Now:yyyy-MM-dd_HH_mm_ss}" + ".png"));
+                // Gets current date and time, and reformats to a file friendly format.
+                DateTime now = DateTime.Now;
+                string fileName = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\TestScreenshots\" + element + "_" + $"{now:yyyy-MM-dd_HH_mm_ss}" + ".png"));
 
                 // Saves the screenshot and attaches to the Test Context.
-                Screenshot.SaveAsFile(FileName, ScreenshotImageFormat.Png);
-                TestContext.AddTestAttachment(FileName);
+                screenshot.SaveAsFile(fileName, ScreenshotImageFormat.Png);
+                TestContext.AddTestAttachment(fileName);
             }
         }
     }

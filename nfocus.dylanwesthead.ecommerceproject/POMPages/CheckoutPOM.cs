@@ -7,7 +7,6 @@
 using nfocus.dylanwesthead.ecommerceproject.Utils;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using TechTalk.SpecFlow;
 
 namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 {
@@ -20,132 +19,175 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
             this._driver = driver;
         }
 
-        // Locators for the customer details field elements used on the billing page. The => means each time the variable is used, find element is called.
-        private IWebElement FirstNameField => _driver.FindElement(By.Id("billing_first_name"));
-        private IWebElement SurnameField => _driver.FindElement(By.Id("billing_last_name"));
-        private IWebElement HomeAddressField => _driver.FindElement(By.Id("billing_address_1"));
-        private IWebElement CityField => _driver.FindElement(By.Id("billing_city"));
-        private IWebElement PostcodeField => _driver.FindElement(By.Id("billing_postcode"));
-        private IWebElement PhoneField => _driver.FindElement(By.Id("billing_phone"));
-        private IWebElement EmailField => _driver.FindElement(By.Id("billing_email"));
-        private IWebElement PayByChequeRadioButton => _driver.FindElement(By.CssSelector("#payment > ul > li.wc_payment_method.payment_method_cheque > label"));
-        private IWebElement PlaceOrderButton => _driver.FindElement(By.Id("place_order"));
+        /* Locators and elements required to complete the checkout pages billing form and place an order. */
+        // The => means each time the variable is used, find element is called.
+        private IWebElement _firstNameField => _driver.FindElement(By.Id("billing_first_name"));
+        private IWebElement _surnameField => _driver.FindElement(By.Id("billing_last_name"));
+        private IWebElement _homeAddressField => _driver.FindElement(By.Id("billing_address_1"));
+        private IWebElement _cityField => _driver.FindElement(By.Id("billing_city"));
+        private IWebElement _postcodeField => _driver.FindElement(By.Id("billing_postcode"));
+        private IWebElement _phoneField => _driver.FindElement(By.Id("billing_phone"));
+        private IWebElement _emailField => _driver.FindElement(By.Id("billing_email"));
+        private IWebElement _payByChequeRadioButton => _driver.FindElement(By.CssSelector("#payment > ul > li.wc_payment_method.payment_method_cheque > label"));
+        private IWebElement _placeOrderButton => _driver.FindElement(By.Id("place_order"));
 
-        // Enters the given first name into the corresponding field on the billing form.
+
+        /*
+         * SetFirstNameField(string)
+         *   - Enters the given first name into the first name field on the billing form.
+         */
         private void SetFirstNameField(string firstName)
         {
-            FirstNameField.Clear();
-            FirstNameField.SendKeys(firstName);
+            _firstNameField.Clear();
+            _firstNameField.SendKeys(firstName);
         }
 
-        // Enters the given surname into the corresponding field on the billing form.
+
+        /*
+         * SetSurnameField(string)
+         *   - Enters the given surname into the surname field on the billing form.
+         */
         private void SetSurnameField(string surname)
         {
-            SurnameField.Clear();
-            SurnameField.SendKeys(surname);
+            _surnameField.Clear();
+            _surnameField.SendKeys(surname);
         }
 
-        // Enters the given address into the corresponding field on the billing form.
+
+        /*
+         * SetHomeAddressField(string)
+         *   - Enters the given home address into the address field on the billing form.
+         */
         private void SetHomeAddressField(string address)
         {
-            HomeAddressField.Clear();
-            HomeAddressField.SendKeys(address);
+            _homeAddressField.Clear();
+            _homeAddressField.SendKeys(address);
         }
 
-        // Enters the given city into the corresponding field on the billing form.
+
+        /*
+         * SetCityField(string)
+         *   - Enters the given city into the city field on the billing form.
+         */
         private void SetCityField(string city)
         {
-            CityField.Clear();
-            CityField.SendKeys(city);
+            _cityField.Clear();
+            _cityField.SendKeys(city);
         }
 
-        // Enters the given postcode into the corresponding field on the billing form.
+
+        /*
+         * SetPostcodeField(string)
+         *   - Enters the given postcode into the postcode field on the billing form.
+         */
         private void SetPostcodeField(string postcode)
         {
-            PostcodeField.Clear();
-            PostcodeField.SendKeys(postcode);
+            _postcodeField.Clear();
+            _postcodeField.SendKeys(postcode);
         }
 
-        // Enters the given phone number into the corresponding field on the billing form.
+
+        /*
+         * SetPhoneField(string)
+         *   - Enters the given phone number into the phone field on the billing form.
+         */
         private void SetPhoneField(string phone)
         {
-            PhoneField.Clear();
-            PhoneField.SendKeys(phone);
+            _phoneField.Clear();
+            _phoneField.SendKeys(phone);
         }
 
-        // Enters the given email into the corresponding field on the billing form.
+
+        /*
+         * SetEmailField(string)
+         *   - Enters the given email address into the email field on the billing form.
+         */
         private void SetEmailField(string email)
         {
-            EmailField.Clear();
-            EmailField.SendKeys(email);
+            _emailField.Clear();
+            _emailField.SendKeys(email);
         }
 
 
-        // Uses all the above methods to populate the billing form with the correct information.
+        /*
+         * PopulateBillingInfo(Customer)
+         *   - Enters the customers billing info into the billing form.
+         *   - Uses setter methods to populate the form correctly.
+         */
         internal void PopulateBillingInfo(Customer customer)
         {
-            SetFirstNameField(customer.First);
-            SetSurnameField(customer.Surname);
-            SetHomeAddressField(customer.Address);
-            SetCityField(customer.Town);
-            SetPostcodeField(customer.Postcode);
-            SetPhoneField(customer.Phone);
-            SetEmailField(customer.Email);
+            SetFirstNameField(customer._first);
+            SetSurnameField(customer._surname);
+            SetHomeAddressField(customer._address);
+            SetCityField(customer._town);
+            SetPostcodeField(customer._postcode);
+            SetPhoneField(customer._phone);
+            SetEmailField(customer._email);
         }
 
-        // Clicks the pay by dheque radio button.
-        // Uses a try/catch to repeat the process and prevent stale element exceptions.
-        internal bool SelectPayByCheque()
+
+        /*
+         * SelectPayByCheque()
+         *   - Clicks the pay by cheque radio button.
+         *   - Employs a try/catch to repeat process and prevent stale element exceptions.
+         */
+        internal void SelectPayByCheque()
         {
             try // Always perform at least once.
             {
-                PayByChequeRadioButton.Click();
+                _payByChequeRadioButton.Click();
             }
             catch // Run function again if the 'try' attempt failed.
             {
-                PayByChequeRadioButton.Click();
-                return false;
+                _payByChequeRadioButton.Click();
             }
-            return true;
         }
 
-        // Clicks the place order button.
-        // Uses a try/catch to repeat the process and prevent any stale element exceptions.
+
+        /*
+         * PlaceOrder()
+         *   - Clicks the place order button.
+         *   - Employs a try/catch to repeat process and prevent stale element exceptions.
+         */
         internal void PlaceOrder()
         {
             try // Always perform at least once.
             {
-                PlaceOrderButton.Click();
+                _placeOrderButton.Click();
             }
             catch // Retry in catch if (try) attempt unsuccessful.
             {
-                PlaceOrderButton.Click();
+                _placeOrderButton.Click();
             }
         }
 
+
         /*
-         * Wait for Order to be Received
+         * WaitForOrderConfirmed()
          *   - Waits for the entry text 'Order received' to be displayed.
          *   - An explicit wait of 5 seconds has been allowed before timeout.
          */
         internal void WaitForOrderConfirmed()
         {
             // Wait for the order details page to be displayed. Creating an order takes a few seconds.
-            WebDriverWait WaitForOrderConfirmation = new(_driver, TimeSpan.FromSeconds(5));
-            WaitForOrderConfirmation.Until(drv => drv.FindElement(By.ClassName("entry-title")).Text.Contains("Order received"));
+            WebDriverWait waitForOrderConfirmation = new(_driver, TimeSpan.FromSeconds(5));
+            waitForOrderConfirmation.Until(drv => drv.FindElement(By.ClassName("entry-title")).Text.Contains("Order received"));
 
         }
 
+
         /*
-         * Create the Customer Object
+         * SetCustomerDetails(Table)
          *   - Creates a customer instance with the details passed from feature file.
-         *   - Returns the customer object with the given details.
+         *   - Returns the customer object populated with the given details.
          */
         public Customer SetCustomerDetails(Table customerDetails)
         {
+            // Convert the provided customer details table to a dictionary.
             Dictionary<string, string> customer = ToDictionary(customerDetails);
 
-            string first = customer["firstName"];
+            // Assign the customer object properties to the values matching the given keys.
+            string first = customer["firstName"]; // "firstName" is a key with the value "Dylan"
             string surname = customer["surname"];
             string address = customer["address"];
             string town = customer["town"];
@@ -156,22 +198,25 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
             return new Customer(first, surname, address, town, postcode, phone, email);
             }
 
+
         /*
-         * Convert Table to Dictionary
-         *   - Takes in a table and maps it out to a dictionary.
+         * ToDictionary(Table)
+         *   - Takes in a table of one customer and maps it out to a dictionary.
+         *   - Retrieves the keys and values from the data table in the feature file.
          *   - Used to assign meaningful keys to the relevant data.
          */
-        internal Dictionary<string, string> ToDictionary(Table table)
+        private Dictionary<string, string> ToDictionary(Table table)
         {
             // Retrieves the keys and values from the data table in the feature file.
-            Dictionary<string, string> customer = new();
-            var x = table.Rows[0];
-            var keys = x.Keys.ToArray();
-            var values = x.Values.ToArray();
+            var x = table.Rows[0]; // The row of the first customer.
+            var keys = x.Keys.ToArray(); // Array of the keys row (table fields).
+            var values = x.Values.ToArray(); // Array of the value row (customer details).
 
-            // Loops through the columns of the row and maps them to dictionary accordingly. 
+            // Loop through columns of the row and maps them to dictionary. 
+            Dictionary<string, string> customer = new();
             for (int i = 0; i < x.Values.Count; i++)
             {
+                // Add the field and value to the customer dictionary.
                 customer.Add(keys[i], values[i]);
             }
 

@@ -8,7 +8,6 @@
  */
 using OpenQA.Selenium;
 using nfocus.dylanwesthead.ecommerceproject.POMPages;
-using nfocus.dylanwesthead.ecommerceproject.Utils;
 
 namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
 {
@@ -34,24 +33,27 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
         [Given(@"I am on the Edgewords eCommerce website")]
         protected private void GivenIAmOnTheEdgewordsECommerceWebsite()
         {
+            // Navigates to login of Edgewords eCommerce site.
             _driver.Url = _baseUrl + "/my-account/";
         }
 
 
         /*
          * [Given] "I am logged in"
-         *    - Logs into the Edgewords eCommerce website with valid credentials.
+         *    - Logs into the Edgewords eCommerce website as a registered customer.
          */
         [Given(@"I am logged in")]
         protected private void GivenIAmLoggedIn()
         {
-            // Log into the website as a registered user
-            string Email = Environment.GetEnvironmentVariable("email");
-            string Password = Environment.GetEnvironmentVariable("password");
+            // Retrieves sensitive email and password from environment.
+            string email = Environment.GetEnvironmentVariable("email");
+            string password = Environment.GetEnvironmentVariable("password");
 
-            LoginPOM LoginPage = new(_driver);
-            LoginPage.DismissNotice();
-            LoginPage.LoginWithValidCredentials(Email, Password);
+            LoginPOM loginPage = new(_driver);
+
+            // Dismisses store notice and logs in
+            loginPage.DismissNotice();
+            loginPage.LoginWithValidCredentials(email, password);
         }
 
 
@@ -62,17 +64,15 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
         [When(@"I add '([^']*)' and '([^']*)' to my cart")]
         protected private void WhenIAddAndToMyCart(string product1, string product2)
         {
-            NavigationBarPOM NavBar = new(_driver);
-            ShopPOM ShopPage = new(_driver);
+            // POM Pages used in this step (in order).
+            NavigationBarPOM navBar = new(_driver);
+            ShopPOM shopPage = new(_driver);
 
-            // Loop through the products passed in though feature files.
-            ShopPage.SearchForAndAddProduct(product1, product2);
+            // Searches for products passed in from feature file and adds to cart.
+            shopPage.SearchForAndAddProduct(product1, product2);
 
-            // Adds the item to cart, should only be one button.
-            ShopPage.AddItemToCart();
-
-            // Go to cart once updated with the items.
-            NavBar.GoToCart();
+            // Navigate to the cart.
+            navBar.GoToCart();
         }
 
         /*
@@ -82,12 +82,13 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
         [When(@"I edit product quantity to '([^']*)' directly from cart")]
         protected private void WhenIEditProductQuantityToDirectlyFromCart(string quantity)
         {
-            // Change product quantity directyl from the cart page
-            CartPOM CartPage = new(_driver);
-            CartPage.ChangeProductQuantity(quantity);
+            CartPOM cartPage = new(_driver);
 
-            // Update the totals after editing the cartS
-            CartPage.UpdateCart();
+            // Change product quantity directly from the cart page.
+            cartPage.ChangeProductQuantity(quantity);
+
+            // Update totals after editing cart.
+            cartPage.UpdateCart();
         }
     }
 }

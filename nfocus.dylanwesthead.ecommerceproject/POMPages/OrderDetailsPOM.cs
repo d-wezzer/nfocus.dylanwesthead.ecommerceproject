@@ -1,6 +1,6 @@
 ﻿/*
  * Author: Dylan Westhead
- * Last Edited: 29/09/2022
+ * Last Edited: 06/10/2022
  *
  *   - The Page Object Model for the order details page of the Edgewords eCommerce demo site. 
  */
@@ -18,15 +18,17 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
             this._driver = driver;
         }
 
-        // Locators for the order number. The => means each time the variable is used, find element is called.
-        private IWebElement OrderNumberField => _driver.FindElement(By.CssSelector(".order > strong"));
-        private IWebElement OrderConfirmationFull => _driver.FindElement(By.ClassName("woocommerce-thankyou-order-details"));
+        /* Locators and elements for the order number on the order details page. */
+        // The => means each time the variable is used, find element is called.
+        private IWebElement _orderNumberField => _driver.FindElement(By.CssSelector(".order > strong"));
+        private IWebElement _orderConfirmationFull => _driver.FindElement(By.ClassName("woocommerce-thankyou-order-details"));
 
 
         /*
-         * Get the Order Number
-         *   - Retrives the order number displayed on the order details page.
-         *   - Uses try/catch to repeat process until a valid string is returned. 
+         * GetOrderNumber()
+         *   - Retrieves the order number displayed on the order details page.
+         *   - Order number is captured directly from the webpage.
+         *   - Uses try/catch to repeat process if the first attempt fails.
          */
         internal string GetOrderNumber()
         {
@@ -35,25 +37,25 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 
             try
             {
-                return OrderNumberField.Text;
+                return _orderNumberField.Text;
             }
             catch
             {
-                return OrderNumberField.Text;
+                return _orderNumberField.Text;
             }
         }
 
 
         /*
-         * Get the Order Details
-         *   - Retrieves the order details from the order details page as a screenshot.
-         *   - Attaches screenshot to the test report details.
+         * ScreenshotNewOrderNumber()
+         *   - Take screenshot of the new order details.
+         *   - Attaches screenshot to the test context for verfication purposes.
          */
-        internal void ScreenshotNewOrderNumber()
+        private void ScreenshotNewOrderNumber()
         {
-            Helper ElementScreenshot = new(_driver);
             // Takes a screenshot of the new order number and attaches to the Test Details (for verification purposes).
-            ElementScreenshot.TakeScreenshotElement(OrderConfirmationFull, "new_order_number");
+            Helper _elementScreenshot = new(_driver);
+            _elementScreenshot.TakeScreenshotElement(_orderConfirmationFull, "new_order_number");
         }
     }
 }
