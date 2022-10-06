@@ -1,6 +1,6 @@
 ﻿/*
  * Author: Dylan Westhead
- * Last Edited: 06/10/2022
+ * Last Edited: 07/10/2022
  *
  *   - The Object Model for the navigation bar. Saves repeating the same code in each of the POMPages.
  */
@@ -26,7 +26,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 
         /* Locators and elements needed for the navigation bar links. */
         // The => means each time the variable is used, find element is called.
-        private readonly By _myAccountLocator = By.LinkText("My account");
+        private By _myAccountLocator => By.LinkText("My account");
         private IWebElement _homeLink => _driver.FindElement(By.LinkText("Home"));
         private IWebElement _shopLink => _driver.FindElement(By.LinkText("Shop"));
         private IWebElement _cartLink => _driver.FindElement(By.LinkText("Cart"));

@@ -1,6 +1,6 @@
 /*
  * Author: Dylan Westhead
- * Last Edited: 06/10/2022
+ * Last Edited: 07/10/2022
  *
  *   - The step definitions used by the coupon scenario.
  *   - Contains all the required information and logic to automate the steps through 
@@ -63,7 +63,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
             Console.WriteLine($"Shipping Cost: £{cartTotals["shippingCost"]}\n\nExpected Grand Total: £{cartTotals["expectedGrandTotal"]}\nActual Grand Total: £{cartTotals["actualGrandTotal"]}\n");
 
             // Verify the coupon deducts the correct percentage off the original total, before shipping costs applied.
-            Assert.That(cartTotals["expectedTotalBeforeShipping"], Is.EqualTo(cartTotals["subtotalBeforeCoupon"] - cartTotals["actualSavings"]), $"Not equivalent to {savingsPercentage}% off the original total cost.");
+            Assert.That(cartTotals["expectedTotalBeforeShipping"], Is.EqualTo(cartTotals["subtotalBeforeCoupon"] - cartTotals["actualSavings"]), $"Not equivalent to {savingsPercentage}% off. Coupon incorrectly applies a savings percentage of {cartTotals["actualSavingsPercentage"]}%.");
 
             // Verify expected grand total is identical to actual grand total displayed on webpage.
             Assert.That(cartTotals["expectedGrandTotal"], Is.EqualTo(cartTotals["actualGrandTotal"]), "Grand total has not been calculated correctly.");

@@ -1,6 +1,6 @@
 ﻿/*
  * Author: Dylan Westhead
- * Last Edited: 06/10/2022
+ * Last Edited: 07/10/2022
  *
  *   - The Page Object Model for the cart page of the Edgewords eCommerce demo site.
  */
@@ -21,7 +21,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 
         /* Locators and elements used to calculate and gather the cart totals on the cart page. */
         // The => means each time the variable is used, find element is called.
-        private readonly By _cartDiscountLocator = By.ClassName("cart-discount");
+        private By _cartDiscountLocator => By.ClassName("cart-discount");
         private IWebElement _couponCodeField => _driver.FindElement(By.Id("coupon_code"));
         private IWebElement _applyCouponButton => _driver.FindElement(By.Name("apply_coupon"));
         private IWebElement _subtotalField => _driver.FindElement(By.CssSelector(".cart-subtotal > td > .amount"));
@@ -134,7 +134,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 
 
         /*
-         * CalculateExpectedAndActualTotals()
+         * CalculateExpectedAndActualTotals(int)
          *   - Calculates all the expected totals whilst also capturing webpage displayed totals.
          *   - Maps all the totals to a dictionary for use in the step definitions.
          */
@@ -145,7 +145,6 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 
             // Calculates expected coupon savings - what it should be.
             Decimal expectedSavings = subtotalBeforeCoupon / 100 * savingsPercentage;
-
             // Captures the actual savings directly from the webpage - what it is.
             Decimal actualSavings = GetCouponSavings();
 
@@ -155,6 +154,9 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 
             // Calculates actual total before shipping using totals captured directly from webpage.
             Decimal actualTotalBeforeShipping = subtotalBeforeCoupon - actualSavings;
+
+            // Calculates the actual savings percentage that was applied.
+            Decimal actualSavingsPercentage = actualSavings / subtotalBeforeCoupon * 100;
 
             // Captures the shipping cost directly from the webpage.
             Decimal shippingCost = GetShippingCost();
@@ -175,7 +177,8 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
                 { nameof(actualTotalBeforeShipping), actualTotalBeforeShipping },
                 { nameof(shippingCost), shippingCost },
                 { nameof(expectedGrandTotal), expectedGrandTotal },
-                { nameof(actualGrandTotal), actualGrandTotal }
+                { nameof(actualGrandTotal), actualGrandTotal },
+                { nameof(actualSavingsPercentage), actualSavingsPercentage }
             };
             return cartTotals;
         }
@@ -190,7 +193,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
         {
             try
             {
-                // Waits 3 seconds for the update button to be enabled
+                // Waits 3 seconds for the update button to be enabled.
                 WebDriverWait waitForUpdateButtonClickable = new WebDriverWait(_driver, TimeSpan.FromSeconds(3));
                 waitForUpdateButtonClickable.Until(drv => _updateCartButton.Enabled);
                 _updateCartButton.Click();

@@ -1,6 +1,6 @@
 ﻿/*
  * Author: Dylan Westhead
- * Last Edited: 06/10/2022
+ * Last Edited: 07/10/2022
  *
  *   - The Page Object Model for the shop of the Edgewords eCommerce demo site. 
  */
@@ -19,8 +19,8 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 
         /* Locators and elements to search for, add items to, and view the cart from the shop page. */
         // The => means each time the variable is used, find element is called.
-        private readonly By _addToCartLocator = By.ClassName("single_add_to_cart_button");
-        private readonly By _viewCartLocator = By.LinkText("View cart");
+        private By _addToCartLocator => By.ClassName("single_add_to_cart_button");
+        private By _viewCartLocator => By.LinkText("View cart");
         private IWebElement _addToCartButton => _driver.FindElement(_addToCartLocator);
         private IWebElement _searchBar => _driver.FindElement(By.Id("woocommerce-product-search-field-0"));
 

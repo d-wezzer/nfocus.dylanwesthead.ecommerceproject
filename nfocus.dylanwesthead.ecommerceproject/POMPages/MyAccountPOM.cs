@@ -1,6 +1,6 @@
 ﻿/*
  * Author: Dylan Westhead
- * Last Edited: 06/10/2022
+ * Last Edited: 07/10/2022
  *
  *   - The Page Object Model for the my account page of the Edgewords eCommerce demo site. 
  */
@@ -19,7 +19,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.POMPages
 
         /* Locators and elements needed to view order history from the my account page. */
         // The => means each time the variable is used, find element is called.
-        private readonly By _ordersLinkLocator = By.LinkText("Orders");
+        private By _ordersLinkLocator => By.LinkText("Orders");
         private IWebElement _ordersLink => _driver.FindElement(_ordersLinkLocator);
         private IWebElement _logOutLink => _driver.FindElement(By.LinkText("Logout"));
 
