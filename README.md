@@ -73,7 +73,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-###Project Summary
+### Project Summary
 
 The Edgewords eCommerce Automated Test project is a deliverable of undergoing and completing the Edgewords Software Testing course. Thus, this project is my first of many testing applications.
 
