@@ -24,8 +24,8 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
--->
 [![LinkedIn][linkedin-shield]][linkedin-url]
+-->
 
 
 
@@ -124,19 +124,19 @@ To get a local copy up and running follow the below steps.
    * SpecFlow.Plus.LivingDocPlugin (3.9.57)
 
 3. Edit environment variables in the 'startEdgewordsTests.bat' batch file.
-   ```sh
+   ```bat
    SET email=YOUR_EMAIL
    SET password=YOUR_PASSWORD
    SET BROWSER=YOUR_BROWSER
    SET STEPSCREENSHOT=CONDITION(true/false)
    ```
 or
-3b.Alternatively can edit environment variables in a `.runsettings` file.
+3b. Alternatively can edit environment variables in a `.runsettings` file.
    ```xml
    <email>YOUR_EMAIL</email>
    <password>YOUR_PASSWORD</password>
    <BROWSER>YOUR_BROSWER</BROWSER>
-   STEPSCREENSHOT=CONDITION(true/false);
+   <STEPSCREENSHOT>=CONDITION(true/false)</STEPSCREENSHOT>
    ```
 4. Run the batch file.
    ```sh
