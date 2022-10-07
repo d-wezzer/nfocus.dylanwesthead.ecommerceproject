@@ -42,7 +42,6 @@
     Automated end-to-end user tests written in Cucumber and C# to test the Edgewords eCommerce demo site.
     <br />
     <a href="https://www.edgewordstraining.co.uk/"><strong>Edgewords Training »</strong></a>
-     
     <a href="https://www.nfocus.co.uk/"><strong>nFocus Testing »</strong></a>
     <br />
   </p>
@@ -57,6 +56,7 @@
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
+	  <li><a href="#project-summary">Project Summary</a></li>
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
@@ -73,29 +73,31 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-###Project summary
+###Project Summary
 
 The Edgewords eCommerce Automated Test project is a deliverable of undergoing and completing the Edgewords Software Testing course. Thus, this project is my first of many testing applications.
 
-Written almost entirely in C#, the project tackles automation of two end-to-end user requirements for the Edgewords eCommerce demo website. The main objective was to learn about the different test automation tools and put my knowledge into practice.
+Written in C#, the project tackles automation of two end-to-end test cases for the Edgewords eCommerce demo website.
 
-The project uses the .Net Core Framework to build and run tests. Specflow and WebDriver are the main automation tools for the project, whilst Cucumber is also used to apply a BDD testing style suitable for business facing representatives. SpecFlow's LivingDoc is used to capture and produce pretty html report files.
+Main Elements
+  * .NET Core Framework: Used to build and run tests. 
+  * SpecFlow WebDriver: The tools used to automate the tests and project.
+  * Cucumber: Allows for a BDD style approach to writing the test cases.
+  * LivingDoc:  Captures and produces pretty html report files.
 
 The two test cases where as follows:
-* 1) The test will login to an e-commerce site as a registered user, purchase an item of clothing, apply a discount code and check that the total is correct after the discount & shipping is applied. 
-* 2) The test will login to an e-commerce site as a registered user, purchase an item of clothing and go through checkout. It will capture the order number and check the order is also present in the ‘My Orders’ section of the site.
+  1) The test will login to an e-commerce site as a registered user, purchase an item of clothing, apply a discount code and check that the total is correct after the discount & shipping is applied. 
+  2) The test will login to an e-commerce site as a registered user, purchase an item of clothing and go through checkout. It will capture the order number and check the order is also present in the ‘My Orders’ section of the site.
 
 GitHub Actions was used to enable a continuous integration pipeline whenever a push is made to the repository. Lastly, a .batch file was created to further enhance automation of the entire project: run and build the tests, compile test results, generate report, launch report. 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-
 ### Built With
 
-* [![Dotnet][Dotnet.microsoft.com]][Dotnet-url]  * [![Cucumber][Cucumber.io]][Cucumber-url]
-* [![Selenium][Selenium.dev]][Selenium-url]
-
+[![Dotnet][Dotnet.microsoft.com]][Dotnet-url]				[![Cucumber][Cucumber.io]][Cucumber-url]
+[![Selenium][Selenium.dev]][Selenium-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -121,14 +123,14 @@ To get a local copy up and running follow the below steps.
    * SpecFlow.NUnit (3.9.74)
    * SpecFlow.Plus.LivingDocPlugin (3.9.57)
 
-3.Edit environment variables in the 'startEdgewordsTests.bat' batch file.
+3. Edit environment variables in the 'startEdgewordsTests.bat' batch file.
    ```sh
    SET email=YOUR_EMAIL
    SET password=YOUR_PASSWORD
    SET BROWSER=YOUR_BROWSER
    SET STEPSCREENSHOT=CONDITION(true/false)
    ```
-<p align="middle">or</p>
+or
 3b.Alternatively can edit environment variables in a `.runsettings` file.
    ```xml
    <email>YOUR_EMAIL</email>
