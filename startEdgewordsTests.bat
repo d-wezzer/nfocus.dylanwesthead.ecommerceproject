@@ -78,12 +78,16 @@ SET timestr=%time%
 SET timeNow=%timestr::=-%
 SET timeFileFormat=%timeNow:~0,8%
 
+:: Checks if there is an empty space at beginning of time variables - a single digit hour (00:00 - 09:59).
+:: Need to remove this otherwise it tries to add a space character into path file.
+if "%timeFileFormat:~0,1%"==" " SET timeFileFormat=%timeFileFormat:~1,8%
+
 :: Sets the generated report path to be unique to todays date
 SET TESTREPORTSPATH=%cd%\nfocus.dylanwesthead.ecommerceproject\TestReports\TestReport_%dateNow%_%timeFileFormat%.html
 
 :: START /W waits for the program to finish before continuing to execute
 :: Runs in the current directory (the batch file is initially in the right directory)
-cd %cd%..
+cd %cd%
 START /W dotnet test
 
 ECHO Test run complete.
@@ -91,7 +95,7 @@ ECHO Test run complete.
 ECHO Compiling test analytics...
 
 :: Changes to the correct directory and runs the Living Doc test assembly command.
-cd nFocus.dylanwesthead.ecommerceproject\bin\Debug\net6.0\"
+cd nFocus.dylanwesthead.ecommerceproject\bin\Debug\net6.0\
 START /W livingdoc test-assembly nfocus.dylanwesthead.ecommerceproject.dll -t TestExecution.json --title "Edgewords eCommerce User Tests - Dylan Westhead" --output %TESTREPORTSPATH%
 
 ECHO Report generated. Launching test report...
@@ -102,4 +106,3 @@ START %TESTREPORTSPATH%
 ECHO.
 
 PAUSE
-
