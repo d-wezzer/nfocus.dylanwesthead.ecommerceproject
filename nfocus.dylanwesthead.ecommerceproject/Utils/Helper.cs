@@ -44,8 +44,12 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
             if (Environment.GetEnvironmentVariable("STEPSCREENSHOT") == "true")
             {
                 // Passes in element and screenshots that element.
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                 ITakesScreenshot ssElem = elem as ITakesScreenshot;
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 Screenshot screenshot = ssElem.GetScreenshot();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
                 // Gets current date and time, and reformats to a file friendly format.
                 DateTime now = DateTime.Now;

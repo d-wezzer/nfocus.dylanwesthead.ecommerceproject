@@ -52,7 +52,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
         {
             CartPOM cartPage = new(_driver);
 
-            // Calculate and retrieve all the expected and actual totals from the cart page.
+            // Calculate and retrieve all the expected and actual totals from the cart page using savings percentage.
             Dictionary<string, decimal> cartTotals = cartPage.CalculateExpectedAndActualTotals(savingsPercentage);
 
             // If environment variable SCREENSHOT is true, then take a screenshot of all totals on cart page.

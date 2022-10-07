@@ -4,6 +4,8 @@
 #   - Feature file running different features at the same time for demonstration purposes.
 #	- The feature and scenario in this file do not contribute to the initial tests.
 
+# Since this is just to demonstrate paralellism, feature can be tagged with ignore to be skipped at runtime.
+#@Ignore 
 Feature: (demo)Demonstrate Feature Parallelisation
 This feature serves to demonstrate running features in paralell, to allow faster test times and most efficient use of available resources.
 

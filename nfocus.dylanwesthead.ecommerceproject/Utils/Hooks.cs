@@ -32,7 +32,9 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
          *   - Allows context injection through scenario context - used to share base data between scenarios.
          *   - Capable of running extra automation logic at given stages of the test process.
          */
+#pragma warning disable CS8618 // Non-nullable field '_driver' must contain a non-null value when exiting constructor. Consider declaring the field as nullable.
         protected private Hooks(ScenarioContext scenarioContext, ISpecFlowOutputHelper outputHelper)
+#pragma warning restore CS8618 // Non-nullable field '_driver' must contain a non-null value when exiting constructor. Consider declaring the field as nullable.
         {
             _scenarioContext = scenarioContext;
             _specflowOutputHelper = outputHelper;
@@ -49,7 +51,9 @@ namespace nfocus.dylanwesthead.ecommerceproject.Utils
         protected private void Setup()
         {
             // Allows customisation of the browser to be used.
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             string browser = Environment.GetEnvironmentVariable("BROWSER");
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
             switch (browser)
             {
                 case "firefox":

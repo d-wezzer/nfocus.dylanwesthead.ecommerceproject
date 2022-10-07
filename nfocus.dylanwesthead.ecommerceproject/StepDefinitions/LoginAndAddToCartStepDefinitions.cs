@@ -45,13 +45,13 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
         [Given(@"I am logged in")]
         protected private void GivenIAmLoggedIn()
         {
-            // Retrieves sensitive email and password from environment.
-            string email = Environment.GetEnvironmentVariable("email");
-            string password = Environment.GetEnvironmentVariable("password");
+            // Retrieves sensitive email and password from environment. If variable is null, throw error.
+            string email = Environment.GetEnvironmentVariable("email") ?? "Unknown environment variable.";
+            string password = Environment.GetEnvironmentVariable("password") ?? "Unknown environment variable.";
 
             LoginPOM loginPage = new(_driver);
 
-            // Dismisses store notice and logs in
+            // Dismisses store notice and logs in.
             loginPage.DismissNotice();
             loginPage.LoginWithValidCredentials(email, password);
         }

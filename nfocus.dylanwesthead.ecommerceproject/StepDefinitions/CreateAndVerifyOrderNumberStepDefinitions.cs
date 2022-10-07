@@ -33,7 +33,7 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
         [Given(@"I am a customer with the following details")]
         protected private void GivenIAmACustomerWithTheFollowingDetails(Table customerDetails)
         {
-            // Creates a customer object and updates the global variable for use in the next step.
+            // Creates a customer instance with details from feature.
             CheckoutPOM checkoutPage = new(_driver);
             Customer customer = checkoutPage.SetCustomerDetails(customerDetails);
 
@@ -96,14 +96,16 @@ namespace nfocus.dylanwesthead.ecommerceproject.StepDefinitions
             // Navigates to my account page.
             navBar.GoToMyAccount();
 
-            // Navigates to order history page..
+            // Navigates to order history page.
             myAccountPage.GoToOrders();
 
             // Captures the top order number (most recent) from the order history.
             string topOrderNumber = allOrdersPage.GetTopOrderNumber();
 
             Console.WriteLine($"\nYour new order number: {newOrderNumber}\nOrders table contains: {topOrderNumber}\n");
-            Assert.That(topOrderNumber, Does.Contain(newOrderNumber), $"The order with order number {newOrderNumber} was not found on your orders page");
+            
+            // Verify order number from the order confirmation page, is equal to top most-recent order number on order history page.
+            Assert.That(topOrderNumber, Does.Contain(newOrderNumber), $"The order with order number {newOrderNumber} was not found on your orders page. Most recent order has order number {topOrderNumber}");
 
         }
     }
