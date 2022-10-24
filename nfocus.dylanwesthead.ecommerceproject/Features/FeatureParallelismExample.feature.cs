@@ -21,12 +21,14 @@ namespace nfocus.dylanwesthead.ecommerceproject.Features
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("(demo)Demonstrate Feature Parallelisation")]
+    [NUnit.Framework.IgnoreAttribute("Ignored feature")]
     public partial class DemoDemonstrateFeatureParallelisationFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private static string[] featureTags = ((string[])(null));
+        private static string[] featureTags = new string[] {
+                "Ignore"};
         
 #line 1 "FeatureParallelismExample.feature"
 #line hidden
